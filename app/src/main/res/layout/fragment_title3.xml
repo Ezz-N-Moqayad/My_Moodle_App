@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title_constraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77B2D1"
+    tools:context=".navBottom.h3.Title3"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <TextView
+        android:id="@+id/editPro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:background="#187093"
+        android:drawableStart="@drawable/ic_save"
+        android:paddingStart="5dp"
+        android:text=" Edit Profile "
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linear_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linear_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back1"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_fNamePro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/back3"
+                android:hint="First Name"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="#98acf8"
+                android:textColorHint="#7D7D7D"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_mNamePro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/back3"
+                android:hint="Middle Name"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="#98acf8"
+                android:textColorHint="#7D7D7D"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_lNamePro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/back3"
+                android:hint="Family Name"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="#98acf8"
+                android:textColorHint="#7D7D7D"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_emailPro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/back3"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="#98acf8"
+            android:textColorHint="#7D7D7D" />
+
+        <EditText
+            android:id="@+id/et_birth_datePro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/back3"
+            android:hint="Birth date"
+            android:inputType="datetime"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="#98acf8"
+            android:textColorHint="#7D7D7D" />
+
+        <EditText
+            android:id="@+id/et_addressPro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/back3"
+            android:hint="Address"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="#98acf8"
+            android:textColorHint="#7D7D7D" />
+
+        <EditText
+            android:id="@+id/et_mobilePro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/back3"
+            android:hint="Mobile"
+            android:inputType="phone"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="#98acf8"
+            android:textColorHint="#7D7D7D" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

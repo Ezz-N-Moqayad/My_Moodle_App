@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home2"
+    app:startDestination="@+id/titleScreen2">
+
+    <fragment
+        android:id="@+id/titleScreen2"
+        android:name="com.example.myapplication3.navBottom.h2.Title2"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_title2">
+        <action
+            android:id="@+id/action_title_to_about2"
+            app:destination="@id/aboutScreen2" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutScreen2"
+        android:name="com.example.myapplication3.navBottom.h2.About2"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about2" />
+</navigation>

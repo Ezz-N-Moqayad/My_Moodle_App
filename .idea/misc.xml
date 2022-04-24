@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/back.xml" value="0.2115" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/back1.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/button_press.xml" value="0.2115" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/button_press_dark.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/circle.xml" value="0.2115" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_add.xml" value="0.2115" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_check.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_feedback.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_home.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_list.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_save.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/ic_settings.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/purple_frame.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/rounded_button.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/rounded_rect.xml" value="0.19" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.18984375" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/activity_log_in.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/activity_login.xml" value="0.153125" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/course_item.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/fragment_about_student.xml" value="0.153125" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/fragment_add_course.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/fragment_home_student.xml" value="0.153125" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout-w936dp/fragment_search_course.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/activity_log_in.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/activity_main2.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/course_item.xml" value="0.22" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_about.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_about2.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_about3.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_about_lecturer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_add_course.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_home_lecturer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_leaderboard.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_register.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_registered.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_search_course.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_settings.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_title.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_title2.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_title3.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_user_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_view_pager.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/fragment_welcome.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/layout_picker.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/list_view_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/layout/user_card.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/menu/bottom_nav.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/menu/drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/menu/toolbar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1635" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1635" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
