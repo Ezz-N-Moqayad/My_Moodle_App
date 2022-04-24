@@ -15,14 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication3.R
 import com.example.myapplication3.logIn.MainActivity
 import com.example.myapplication3.modle.Course
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -33,9 +29,7 @@ class HomeLecturer : Fragment() {
 
     lateinit var auth: FirebaseAuth
     private var db: FirebaseFirestore? = null
-    lateinit var database: DatabaseReference;
-    private var adapter: FirebaseRecyclerAdapter<Course, CourseViewHolder>? = null
-
+    private var adapter: FirestoreRecyclerAdapter<Course, CourseViewHolder>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,13 +40,12 @@ class HomeLecturer : Fragment() {
 
         auth = Firebase.auth
         db = Firebase.firestore
-        database = Firebase.database.reference
 
-        val query = database.child("Courses")
+        val query = db!!.collection("Courses")
         val options =
-            FirebaseRecyclerOptions.Builder<Course>().setQuery(query, Course::class.java).build()
+            FirestoreRecyclerOptions.Builder<Course>().setQuery(query, Course::class.java).build()
 
-        adapter = object : FirebaseRecyclerAdapter<Course, CourseViewHolder>(options) {
+        adapter = object : FirestoreRecyclerAdapter<Course, CourseViewHolder>(options) {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
                 val root = LayoutInflater.from(context).inflate(R.layout.course_item, parent, false)
                 return CourseViewHolder(root)
@@ -60,39 +53,35 @@ class HomeLecturer : Fragment() {
 
             override fun onBindViewHolder(holder: CourseViewHolder, position: Int, model: Course) {
 
-//                var count = 0
-//                db!!.collection("Lecturer").get().addOnSuccessListener { querySnapshot ->
-//                    for (document in querySnapshot) {
-//                        if (document.get("Email") == auth.currentUser!!.email) {
-//                            if ("${
-//                                    document.get("First_Name").toString()
-//                                } ${
-//                                    document.get("Middle_Name").toString()
-//                                } ${document.get("Family_Name").toString()}" == model.Lecturer
-//                            ) {
-//                                count++
-                holder.course_name.text = model.Name_Course
-                holder.course_lecturer.text = model.Lecturer
-                holder.course_number.text = model.Number_Course
+                var count = 0
+                db!!.collection("Lecturer").get().addOnSuccessListener { querySnapshot ->
+                    for (document in querySnapshot) {
+                        if (document.get("Email") == auth.currentUser!!.email) {
+                            if ("${
+                                    document.get("First_Name").toString()
+                                } ${
+                                    document.get("Middle_Name").toString()
+                                } ${document.get("Family_Name").toString()}" == model.Lecturer
+                            ) {
+                                count++
+                                holder.course_name.text = model.Name_Course
+                                holder.course_lecturer.text = model.Lecturer
+                                holder.course_number.text = model.Number_Course
 
-//                                holder.course_layout.setOnClickListener {
-//                                    findNavController().navigate(R.id.action_title_to_about)
-
-//                                    intent(
-//                                        model.id,
-//                                        model.Name_Course,
-//                                        model.Lecturer,
-//                                        model.Number_Course
-//                                    )
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
+                                holder.course_layout.setOnClickListener {
+                                    findNavController().navigate(R.id.action_title_to_about)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         rvCourseLecturer.layoutManager = LinearLayoutManager(context)
         rvCourseLecturer.adapter = adapter
+
+
+
 
         return view
     }
@@ -102,21 +91,6 @@ class HomeLecturer : Fragment() {
         var course_lecturer = view.findViewById<TextView>(R.id.course_lecturer)!!
         var course_number = view.findViewById<TextView>(R.id.course_number)!!
         var course_layout = view.findViewById<LinearLayout>(R.id.course_layout)!!
-    }
-
-    fun intent(
-        id: String,
-        Name_Course: String,
-        Lecturer: String,
-        Number_Course: String
-    ) {
-        val i = R.id.action_title_to_about
-
-//        i.putExtra("id", id)
-//        i.putExtra("Name_Book", Name_Course)
-//        i.putExtra("Name_Author", Lecturer)
-//        i.putExtra("Launch_Year", Number_Course)
-        findNavController().navigate(R.id.action_title_to_about)
     }
 
     override fun onStart() {

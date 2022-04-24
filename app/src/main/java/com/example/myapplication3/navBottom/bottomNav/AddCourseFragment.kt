@@ -1,9 +1,7 @@
 package com.example.myapplication3.navBottom.bottomNav
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.myapplication3.R
-import com.example.myapplication3.logIn.LogInActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -30,7 +25,6 @@ class AddCourseFragment : Fragment() {
     private lateinit var addNumberCourse: EditText
     private lateinit var addCourse: Button
 
-    lateinit var database: DatabaseReference
     var db: FirebaseFirestore? = null
     lateinit var auth: FirebaseAuth
 
@@ -45,7 +39,6 @@ class AddCourseFragment : Fragment() {
         addNumberCourse = view.findViewById(R.id.addNumberCourse)
         addCourse = view.findViewById(R.id.addCourse)
 
-        database = Firebase.database.reference
         db = Firebase.firestore
         auth = Firebase.auth
 
@@ -78,11 +71,6 @@ class AddCourseFragment : Fragment() {
                     Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show()
                     addNameCourse.text.clear()
                     addNumberCourse.text.clear()
-
-
-                    findNavController().navigate(R.id.action_add_to_home)
-
-
                 }
                 builder.setNegativeButton("No") { d, _ ->
                     d.dismiss()
@@ -90,6 +78,7 @@ class AddCourseFragment : Fragment() {
                 builder.create().show()
             }
         }
+
         return view
     }
 
@@ -105,7 +94,7 @@ class AddCourseFragment : Fragment() {
             "Number_Course" to nameAuthor,
             "Lecturer" to launchYear,
         )
-        database.child("Courses/$id").setValue(course)
+        db!!.collection("Courses").add(course)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,4 +103,5 @@ class AddCourseFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.addCourse_toolbar)
         NavigationUI.setupWithNavController(toolbar, findNavController())
     }
+
 }
