@@ -16,17 +16,14 @@ class Leaderboard : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_leaderboard, container, false)
 
         val viewAdapter = MyAdapter(Array(2) { "Person ${it + 1}" })
 
         view.findViewById<RecyclerView>(R.id.leaderboard_list).run {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
             setHasFixedSize(true)
 
-            // specify an viewAdapter (see also next example)
             adapter = viewAdapter
 
         }
@@ -40,22 +37,17 @@ class MyAdapter(private val myDataset: Array<String>) :
 
     class ViewHolder(val item: View) : RecyclerView.ViewHolder(item)
 
-
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): ViewHolder {
-        // create a new view
+
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_view_item, parent, false)
-
 
         return ViewHolder(itemView)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+
         holder.item.findViewById<TextView>(R.id.user_name_text).text = myDataset[position]
 
         holder.item.findViewById<ImageView>(R.id.user_avatar_image)
@@ -70,7 +62,6 @@ class MyAdapter(private val myDataset: Array<String>) :
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = myDataset.size
 
     companion object {

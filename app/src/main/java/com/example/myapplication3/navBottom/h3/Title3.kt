@@ -186,7 +186,6 @@ class Title3 : Fragment() {
             }
     }
 
-
     private fun disableEdit() {
         et_fNamePro.isEnabled = false
         et_mNamePro.isEnabled = false

@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class BottomNavFragment : Fragment() {
 
     private val bottomNavSelectedItemIdKey = "BOTTOM_NAV_SELECTED_ITEM_ID_KEY"
-    private var bottomNavSelectedItemId = R.id.home // Must be your starting destination
+    private var bottomNavSelectedItemId = R.id.home
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +33,6 @@ class BottomNavFragment : Fragment() {
         setupBottomNavBar(view)
     }
 
-    // Needed to maintain correct state over rotations
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(bottomNavSelectedItemIdKey, bottomNavSelectedItemId)
         super.onSaveInstanceState(outState)
@@ -42,7 +41,7 @@ class BottomNavFragment : Fragment() {
     private fun setupBottomNavBar(view: View) {
         val bottomNavView = view.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         val toolbar = view.findViewById<Toolbar>(R.id.bottom_nav_toolbar)
-        // Your navGraphIds must have the same ids as your menuItem ids
+
         val navGraphIds = listOf(
             R.navigation.home,
             R.navigation.list,
@@ -53,21 +52,21 @@ class BottomNavFragment : Fragment() {
 
         addToolbarListener(toolbar)
         bottomNavView.selectedItemId =
-            bottomNavSelectedItemId // Needed to maintain correct state on return
+            bottomNavSelectedItemId
 
         val controller = bottomNavView.setupWithNavController(
             fragmentManager = childFragmentManager,
             navGraphIds = navGraphIds,
             backButtonBehaviour = POP_HOST_FRAGMENT,
             containerId = R.id.bottom_nav_container,
-            firstItemId = R.id.home, // Must be the same as bottomNavSelectedItemId
+            firstItemId = R.id.home,
             intent = requireActivity().intent
         )
 
         controller.observe(viewLifecycleOwner, { navController ->
             NavigationUI.setupWithNavController(toolbar, navController)
             bottomNavSelectedItemId =
-                navController.graph.id // Needed to maintain correct state on return
+                navController.graph.id
         })
     }
 
