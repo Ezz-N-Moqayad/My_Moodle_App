@@ -49,18 +49,18 @@ class HomeLecturer : Fragment() {
             }
 
             override fun onBindViewHolder(holder: CourseViewHolder, position: Int, model: Course) {
-
-                var count = 0
-                db!!.collection("Lecturer").get().addOnSuccessListener { querySnapshot ->
-                    for (document in querySnapshot) {
-                        if (document.get("Email") == auth.currentUser!!.email) {
-                            if ("${
-                                    document.get("First_Name").toString()
-                                } ${
-                                    document.get("Middle_Name").toString()
-                                } ${document.get("Family_Name").toString()}" == model.Lecturer
-                            ) {
-                                count++
+//
+//                var count = 0
+//                db!!.collection("Lecturer").get().addOnSuccessListener { querySnapshot ->
+//                    for (document in querySnapshot) {
+//                        if (document.get("Email") == auth.currentUser!!.email) {
+//                            if ("${
+//                                    document.get("First_Name").toString()
+//                                } ${
+//                                    document.get("Middle_Name").toString()
+//                                } ${document.get("Family_Name").toString()}" == model.Lecturer
+//                            ) {
+//                                count++
                                 holder.course_name.text = model.Name_Course
                                 holder.course_lecturer.text = model.Lecturer
                                 holder.course_number.text = model.Number_Course
@@ -68,10 +68,10 @@ class HomeLecturer : Fragment() {
                                 holder.course_layout.setOnClickListener {
                                     findNavController().navigate(R.id.action_title_to_about)
                                 }
-                            }
-                        }
-                    }
-                }
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
         rvCourseLecturer.layoutManager = LinearLayoutManager(context)

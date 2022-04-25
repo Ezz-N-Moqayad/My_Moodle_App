@@ -2,6 +2,7 @@ package com.example.myapplication3.navBottom.bottomNav
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,28 +58,65 @@ class AddCourseFragment : Fragment() {
         addCourse.setOnClickListener {
             if (addNameCourse.text.isEmpty() || addNumberCourse.text.isEmpty()) {
                 Toast.makeText(context, "Fill Fields", Toast.LENGTH_SHORT).show()
+            } else if (addNumberCourse.text.length != 5) {
+                Toast.makeText(
+                    context, "Course number must consist of 5 digits", Toast.LENGTH_SHORT
+                ).show()
             } else {
-                val builder = AlertDialog.Builder(context)
-                builder.setTitle("Add Course")
-                builder.setMessage("Do you want to Add the Course?")
-                builder.setPositiveButton("Yes") { _, _ ->
-                    addCourse(
-                        id.toString(),
-                        addNameCourse.text.toString(),
-                        addNumberCourse.text.toString(),
-                        lec
-                    )
-                    Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show()
-                    addNameCourse.text.clear()
-                    addNumberCourse.text.clear()
-                }
-                builder.setNegativeButton("No") { d, _ ->
-                    d.dismiss()
-                }
-                builder.create().show()
+                var Name_Course = "null"
+                var Number_Course = "null"
+                db!!.collection("Courses").get()
+                    .addOnSuccessListener { querySnapshot ->
+                        for (document in querySnapshot) {
+                            if (document.get("Name_Course") == addNameCourse.text.toString()) {
+                                Name_Course = "Name_Course"
+                                Toast.makeText(
+                                    context,
+                                    "This ${addNameCourse.text} is already in use, try again",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            if (document.get("Number_Course") == addNumberCourse.text.toString()) {
+                                Number_Course = "Number_Course"
+                                Toast.makeText(
+                                    context,
+                                    "This ${addNumberCourse.text} is already in use, try again",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                Handler().postDelayed({
+                    when {
+                        Name_Course == "Name_Course" -> {}
+                        Number_Course == "Number_Course" -> {}
+                        else -> {
+                            val builder = AlertDialog.Builder(context)
+                            builder.setTitle("Add Course")
+                            builder.setMessage("Do you want to Add the Course?")
+                            builder.setPositiveButton("Yes") { _, _ ->
+                                addCourse(
+                                    id.toString(),
+                                    addNameCourse.text.toString(),
+                                    addNumberCourse.text.toString(),
+                                    lec
+                                )
+                                Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT)
+                                    .show()
+                                addNameCourse.text.clear()
+                                addNumberCourse.text.clear()
+                                findNavController().navigate(R.id.action_add_to_home)
+                            }
+                            builder.setNegativeButton("No") { d, _ ->
+                                d.dismiss()
+                                findNavController().navigate(R.id.action_add_to_home)
+                            }
+                            builder.create().show()
+                        }
+                    }
+                }, 1500)
             }
         }
-
         return view
     }
 

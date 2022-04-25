@@ -1,5 +1,6 @@
 package com.example.myapplication3.logIn
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +21,7 @@ class LogInActivity : AppCompatActivity() {
     private lateinit var btn_login: Button
     private lateinit var tv_sign_up: TextView
 
+    lateinit var progressDialog: ProgressDialog
     lateinit var auth: FirebaseAuth
     var db: FirebaseFirestore? = null
 
@@ -39,6 +41,7 @@ class LogInActivity : AppCompatActivity() {
             if (et_email_login.text.isEmpty() || et_password_login.text.isEmpty()) {
                 Toast.makeText(this, "التسجيل غير كامل", Toast.LENGTH_SHORT).show()
             } else {
+                showDialog()
                 LogInAccount(et_email_login.text.toString(), et_password_login.text.toString())
             }
         }
@@ -51,13 +54,11 @@ class LogInActivity : AppCompatActivity() {
     private fun LogInAccount(email: String, passWord: String) {
         auth.signInWithEmailAndPassword(email, passWord).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-//                Toast.makeText(this, "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show()
-
                 db!!.collection("Student").get()
                     .addOnSuccessListener { querySnapshot ->
                         for (document in querySnapshot) {
                             if (document.get("Email") == auth.currentUser!!.email) {
-                                   startActivity(Intent(this, MainActivity::class.java))
+                                startActivity(Intent(this, MainActivity::class.java))
                                 Toast.makeText(this, "Student", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -66,14 +67,29 @@ class LogInActivity : AppCompatActivity() {
                     .addOnSuccessListener { querySnapshot ->
                         for (document in querySnapshot) {
                             if (document.get("Email") == auth.currentUser!!.email) {
-                                   startActivity(Intent(this, MainActivity::class.java))
+                                startActivity(Intent(this, MainActivity::class.java))
                                 Toast.makeText(this, "Lecturer", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
+                hideDialog()
             } else {
                 Toast.makeText(this, "فشل في التسجيل", Toast.LENGTH_SHORT).show()
+                hideDialog()
             }
         }
     }
+
+    private fun showDialog() {
+        progressDialog = ProgressDialog(this)
+        progressDialog!!.setMessage("Uploading ...")
+        progressDialog!!.setCancelable(false)
+        progressDialog!!.show()
+    }
+
+    private fun hideDialog() {
+        if (progressDialog!!.isShowing)
+            progressDialog!!.dismiss()
+    }
+
 }
