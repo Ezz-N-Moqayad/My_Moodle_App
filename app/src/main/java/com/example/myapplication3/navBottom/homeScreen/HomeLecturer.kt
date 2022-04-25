@@ -1,17 +1,20 @@
 package com.example.myapplication3.navBottom.homeScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication3.R
 import com.example.myapplication3.modle.Course
+import com.example.myapplication3.navBottom.listscreen.MyAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -49,36 +52,24 @@ class HomeLecturer : Fragment() {
             }
 
             override fun onBindViewHolder(holder: CourseViewHolder, position: Int, model: Course) {
-//
-//                var count = 0
-//                db!!.collection("Lecturer").get().addOnSuccessListener { querySnapshot ->
-//                    for (document in querySnapshot) {
-//                        if (document.get("Email") == auth.currentUser!!.email) {
-//                            if ("${
-//                                    document.get("First_Name").toString()
-//                                } ${
-//                                    document.get("Middle_Name").toString()
-//                                } ${document.get("Family_Name").toString()}" == model.Lecturer
-//                            ) {
-//                                count++
-                                holder.course_name.text = model.Name_Course
-                                holder.course_lecturer.text = model.Lecturer
-                                holder.course_number.text = model.Number_Course
+                holder.course_name.text = model.Name_Course
+                holder.course_lecturer.text = model.Lecturer
+                holder.course_number.text = model.Number_Course
 
-                                holder.course_layout.setOnClickListener {
-                                    findNavController().navigate(R.id.action_title_to_about)
-                                }
-//                            }
-//                        }
-//                    }
-//                }
+                holder.course_layout.setOnClickListener {
+                    val i = Intent(context, MainActivity3::class.java)
+                    i.putExtra("id", model.id)
+                    i.putExtra("Name_Course", model.Name_Course)
+                    i.putExtra("Number_Course", model.Number_Course)
+                    i.putExtra("Lecturer", model.Lecturer)
+                    startActivity(i)
+
+//                    findNavController().navigate(R.id.action_title_to_about)
+                }
             }
         }
         rvCourseLecturer.layoutManager = LinearLayoutManager(context)
         rvCourseLecturer.adapter = adapter
-
-
-
 
         return view
     }

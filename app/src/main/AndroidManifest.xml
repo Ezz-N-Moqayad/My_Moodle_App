@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication3">
         <activity
+            android:name=".navBottom.homeScreen.MainActivity3"
+            android:exported="false" />
+        <activity
             android:name=".logIn.MainActivity"
             android:exported="false" />
         <activity
