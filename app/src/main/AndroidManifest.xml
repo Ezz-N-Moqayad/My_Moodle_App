@@ -12,7 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication3">
         <activity
-            android:name=".navBottom.homeScreen.MainActivity3"
+            android:name=".navBottom.homeScreen.course.AddVideo"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.AddAssignment"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.AddFill"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.CoursePage"
             android:exported="false" />
         <activity
             android:name=".logIn.MainActivity"

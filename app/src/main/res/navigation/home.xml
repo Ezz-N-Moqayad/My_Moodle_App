@@ -9,16 +9,6 @@
         android:id="@+id/titleScreen"
         android:name="com.example.myapplication3.navBottom.homeScreen.HomeLecturer"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home_lecturer">
-        <action
-            android:id="@+id/action_title_to_about"
-            app:destination="@id/aboutScreen" />
-    </fragment>
-    <fragment
-        android:id="@+id/aboutScreen"
-        android:name="com.example.myapplication3.navBottom.homeScreen.AboutLecturer"
-        android:label="@string/title_about"
-        tools:layout="@layout/fragment_about_lecturer">
+        tools:layout="@layout/fragment_home_lecturer" />
 
-    </fragment>
 </navigation>

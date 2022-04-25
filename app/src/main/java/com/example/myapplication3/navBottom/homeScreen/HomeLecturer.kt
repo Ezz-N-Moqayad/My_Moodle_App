@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication3.R
 import com.example.myapplication3.modle.Course
+import com.example.myapplication3.navBottom.homeScreen.course.CoursePage
 import com.example.myapplication3.navBottom.listscreen.MyAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -57,7 +58,7 @@ class HomeLecturer : Fragment() {
                 holder.course_number.text = model.Number_Course
 
                 holder.course_layout.setOnClickListener {
-                    val i = Intent(context, MainActivity3::class.java)
+                    val i = Intent(context, CoursePage::class.java)
                     i.putExtra("id", model.id)
                     i.putExtra("Name_Course", model.Name_Course)
                     i.putExtra("Number_Course", model.Number_Course)
