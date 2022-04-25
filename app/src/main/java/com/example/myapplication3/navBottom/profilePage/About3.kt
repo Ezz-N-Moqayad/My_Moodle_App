@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.h3
+package com.example.myapplication3.navBottom.profilePage
 
 import android.os.Bundle
 import android.view.LayoutInflater

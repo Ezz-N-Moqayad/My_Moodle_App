@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.h3
+package com.example.myapplication3.navBottom.profilePage
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -75,18 +75,26 @@ class Title3 : Fragment() {
                 )
                 enableEdit()
             } else {
-                editPro.text = " Edit Profile "
-                editPro.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.ic_save,
-                    0,
-                    0,
-                    0
-                )
-                disableEdit()
-                editUser()
+                if (et_fNamePro.text.isEmpty() || et_mNamePro.text.isEmpty() || et_lNamePro.text.isEmpty() ||
+                    et_birth_datePro.text.isEmpty() || et_addressPro.text.isEmpty() ||
+                    et_emailPro.text.isEmpty() || et_mobilePro.text.isEmpty()
+                ) {
+                    Toast.makeText(
+                        context, "The modification process must be completed", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    editPro.text = " Edit Profile "
+                    editPro.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        R.drawable.ic_save,
+                        0,
+                        0,
+                        0
+                    )
+                    disableEdit()
+                    editUser()
+                }
             }
         }
-
         return view
     }
 
