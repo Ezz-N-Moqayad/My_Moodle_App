@@ -65,23 +65,47 @@ class CoursePage : AppCompatActivity() {
         }
 
         btnPopup.setOnClickListener {
-            val popup = PopupMenu(this, btnPopup)
-            popup.menuInflater.inflate(R.menu.toolbar_coures, popup.menu)
-            popup.setOnMenuItemClickListener { x ->
-                when (x.itemId) {
-                    R.id.addsFill -> intent(Intent(this, AddFill::class.java))
-                    R.id.addsAssignment -> intent(Intent(this, AddAssignment::class.java))
-                    R.id.addsVideo -> intent(Intent(this, AddVideo::class.java))
+            db!!.collection("Lecturer").get()
+                .addOnSuccessListener { querySnapshot ->
+                    for (document in querySnapshot) {
+                        if (document.get("Email") == auth.currentUser!!.email) {
+                            val popup = PopupMenu(this, btnPopup)
+                            popup.menuInflater.inflate(R.menu.toolbar_coures, popup.menu)
+                            popup.setOnMenuItemClickListener { x ->
+                                when (x.itemId) {
+                                    R.id.addsFill -> intent(Intent(this, AddFill::class.java))
+                                    R.id.addsAssignment -> intent(
+                                        Intent(
+                                            this,
+                                            AddAssignment::class.java
+                                        )
+                                    )
+                                    R.id.addsVideo -> intent(Intent(this, AddVideo::class.java))
+                                }
+                                true
+                            }
+                            popup.show()
+                        }
+                    }
                 }
-                true
-            }
-            popup.show()
+            db!!.collection("Student").get()
+                .addOnSuccessListener { querySnapshot ->
+                    for (document in querySnapshot) {
+                        if (document.get("Email") == auth.currentUser!!.email) {
+                            Toast.makeText(
+                                this, "It's not for you, only for Lecturer",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
+                }
         }
     }
 
     fun intent(Intent_Page: Intent) {
         val i = Intent_Page
-        i.putExtra("id", intent.getStringExtra("id").toString())
+        i.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
         i.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
         i.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
         i.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())

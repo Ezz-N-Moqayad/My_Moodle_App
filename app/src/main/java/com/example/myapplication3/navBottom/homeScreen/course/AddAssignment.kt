@@ -39,27 +39,13 @@ class AddAssignment : AppCompatActivity() {
         textViewAss.text = intent.getStringExtra("Lecturer").toString()
 
         backPageCourseAss.setOnClickListener {
-            db!!.collection("Student").get()
-                .addOnSuccessListener { querySnapshot ->
-                    for (document in querySnapshot) {
-                        if (document.get("Email") == auth.currentUser!!.email) {
-                            intent(Intent(this, CoursePage::class.java))
-                        }
-                    }
-                }
-            db!!.collection("Lecturer").get()
-                .addOnSuccessListener { querySnapshot ->
-                    for (document in querySnapshot) {
-                        if (document.get("Email") == auth.currentUser!!.email) {
-                            intent(Intent(this, CoursePage::class.java))
-                        }
-                    }
-                }
+            intent(Intent(this, CoursePage::class.java))
         }
     }
+
     fun intent(Intent_Page: Intent) {
         val i = Intent_Page
-        i.putExtra("id", intent.getStringExtra("id").toString())
+        i.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
         i.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
         i.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
         i.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())

@@ -15,6 +15,20 @@
         app:titleTextColor="@android:color/white" />
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:text="Add Course"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/addNameCourse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCourse_toolbar" />
+
     <EditText
         android:id="@+id/addNameCourse"
         android:layout_width="300dp"
@@ -29,8 +43,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/addNumberCourse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/addNumberCourse"
@@ -54,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="ADD BOOK"
+        android:text="ADD Course"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

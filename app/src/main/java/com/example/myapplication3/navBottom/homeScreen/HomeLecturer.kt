@@ -59,13 +59,11 @@ class HomeLecturer : Fragment() {
 
                 holder.course_layout.setOnClickListener {
                     val i = Intent(context, CoursePage::class.java)
-                    i.putExtra("id", model.id)
+                    i.putExtra("id_Course", model.id)
                     i.putExtra("Name_Course", model.Name_Course)
                     i.putExtra("Number_Course", model.Number_Course)
                     i.putExtra("Lecturer", model.Lecturer)
                     startActivity(i)
-
-//                    findNavController().navigate(R.id.action_title_to_about)
                 }
             }
         }
