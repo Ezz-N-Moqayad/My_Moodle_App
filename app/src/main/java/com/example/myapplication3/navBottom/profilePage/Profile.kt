@@ -15,7 +15,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-class Title3 : Fragment() {
+class Profile : Fragment() {
 
     private lateinit var et_fNamePro: EditText
     private lateinit var et_mNamePro: EditText
@@ -32,7 +32,7 @@ class Title3 : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_title3, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         et_fNamePro = view.findViewById(R.id.et_fNamePro)
         et_mNamePro = view.findViewById(R.id.et_mNamePro)
