@@ -9,7 +9,7 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/course_layout"
+        android:id="@+id/file_course_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -21,7 +21,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,39 +28,27 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/course_name"
+                    android:id="@+id/file_course_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course Name"
+                    android:text="File Name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/course_lecturer"
+                    android:id="@+id/file_course_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lecturer Course"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/course_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Course Number"
+                    android:text="File Number"
                     android:textSize="16sp" />
-
-
             </LinearLayout>
-
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:background="#C8C8C8" />
     </LinearLayout>
 </LinearLayout>

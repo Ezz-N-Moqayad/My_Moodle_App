@@ -3,8 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/activity_add_file.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/activity_add_fill.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/activity_course_page.xml" value="0.25" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/course_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/file_course_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/fragment_add_course.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/fragment_home_lecturer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/fragment_user_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/list_view_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/menu/toolbar_coures.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/back.xml" value="0.2115" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Flutter/MyApplication3/app/src/main/res/drawable-v24/back1.xml" value="0.1" />

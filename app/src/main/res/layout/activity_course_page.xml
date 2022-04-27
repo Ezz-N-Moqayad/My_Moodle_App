@@ -52,31 +52,134 @@
         android:id="@+id/textViewCou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2Cou" />
+        android:textSize="20dp"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toEndOf="@+id/textView2Cou"
+        app:layout_constraintTop_toBottomOf="@+id/Courses_toolbar" />
 
     <TextView
         android:id="@+id/textView2Cou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3Cou" />
+        android:textSize="20dp"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toEndOf="@+id/textView3Cou"
+        app:layout_constraintTop_toBottomOf="@+id/Courses_toolbar" />
 
     <TextView
         android:id="@+id/textView3Cou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20dp"
+        app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Courses_toolbar" />
 
+    <View
+        android:id="@+id/View"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="25dp"
+        android:background="#C8C8C8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2Cou" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C3C3C3"
+        android:layout_marginTop="125dp"
+        android:contentDescription="@string/title_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/View">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_File"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25sp"
+                android:layout_marginTop="10dp"
+                android:text="Files"
+                android:textSize="28dp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.172" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF" />
+
+            <View
+                android:id="@+id/ViewFile"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="25dp"
+                android:background="#C8C8C8" />
+
+            <TextView
+                android:id="@+id/tv_Ass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25sp"
+                android:layout_marginTop="10dp"
+                android:text="Assignments"
+                android:textSize="28dp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.172" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF" />
+
+            <View
+                android:id="@+id/ViewAss"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="25dp"
+                android:background="#C8C8C8" />
+
+            <TextView
+                android:id="@+id/tv_Video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25sp"
+                android:layout_marginTop="10dp"
+                android:text="Video"
+                android:textSize="28dp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.172" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF" />
+
+            <View
+                android:id="@+id/ViewVideo"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="25dp"
+                android:background="#C8C8C8" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
