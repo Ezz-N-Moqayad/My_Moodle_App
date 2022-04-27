@@ -73,7 +73,7 @@ class CoursePage : AppCompatActivity() {
                             popup.menuInflater.inflate(R.menu.toolbar_coures, popup.menu)
                             popup.setOnMenuItemClickListener { x ->
                                 when (x.itemId) {
-                                    R.id.addsFill -> intent(Intent(this, AddFill::class.java))
+                                    R.id.addsFile -> intent(Intent(this, AddFile::class.java))
                                     R.id.addsAssignment -> intent(
                                         Intent(
                                             this,

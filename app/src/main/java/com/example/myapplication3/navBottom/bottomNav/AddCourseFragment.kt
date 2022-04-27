@@ -122,15 +122,15 @@ class AddCourseFragment : Fragment() {
 
     private fun addCourse(
         id: String,
-        nameBook: String,
-        nameAuthor: String,
-        launchYear: String
+        Name_Course: String,
+        Number_Course: String,
+        Lecturer: String
     ) {
         val course = hashMapOf(
             "id" to id,
-            "Name_Course" to nameBook,
-            "Number_Course" to nameAuthor,
-            "Lecturer" to launchYear,
+            "Name_Course" to Name_Course,
+            "Number_Course" to Number_Course,
+            "Lecturer" to Lecturer,
         )
         db!!.collection("Courses").add(course)
     }

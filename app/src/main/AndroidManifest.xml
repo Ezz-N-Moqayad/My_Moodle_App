@@ -18,7 +18,7 @@
             android:name=".navBottom.homeScreen.course.AddAssignment"
             android:exported="false" />
         <activity
-            android:name=".navBottom.homeScreen.course.AddFill"
+            android:name=".navBottom.homeScreen.course.AddFile"
             android:exported="false" />
         <activity
             android:name=".navBottom.homeScreen.course.CoursePage"

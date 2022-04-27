@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/addsFill"
-        android:contentDescription="Add Fill"
+        android:id="@+id/addsFile"
+        android:contentDescription="Add File"
         android:icon="@drawable/ic_add"
-        android:title="Add Fill" />
+        android:title="Add File" />
 
     <item
         android:id="@+id/addsAssignment"
