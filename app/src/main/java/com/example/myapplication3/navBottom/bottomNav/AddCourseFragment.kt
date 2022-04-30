@@ -16,8 +16,8 @@ import androidx.navigation.ui.NavigationUI
 import com.example.myapplication3.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class AddCourseFragment : Fragment() {
@@ -26,7 +26,7 @@ class AddCourseFragment : Fragment() {
     private lateinit var addNumberCourse: EditText
     private lateinit var addCourse: Button
 
-    var db: FirebaseFirestore? = null
+    lateinit var database: DatabaseReference
     lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -40,20 +40,23 @@ class AddCourseFragment : Fragment() {
         addNumberCourse = view.findViewById(R.id.addNumberCourse)
         addCourse = view.findViewById(R.id.addCourse)
 
-        db = Firebase.firestore
         auth = Firebase.auth
-
+        database = Firebase.database.reference
+        val idCourse = System.currentTimeMillis()
         var lec = ""
-        db!!.collection("Lecturer").get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot) {
-                    if (document.get("Email") == auth.currentUser!!.email) {
-                        lec = "${document.get("First_Name").toString()} ${
-                            document.get("Middle_Name").toString()
-                        } ${document.get("Family_Name").toString()}"
-                    }
+        var idLecturer = ""
+
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    lec = "${document.child("First_Name").value.toString()} ${
+                        document.child("Middle_Name").value.toString()
+                    } ${document.child("Family_Name").value.toString()}"
+                    idLecturer = document.child("id_Lecturer").value.toString()
+
                 }
             }
+        }
 
         addCourse.setOnClickListener {
             if (addNameCourse.text.isEmpty() || addNumberCourse.text.isEmpty()) {
@@ -65,10 +68,10 @@ class AddCourseFragment : Fragment() {
             } else {
                 var Name_Course = "null"
                 var Number_Course = "null"
-                db!!.collection("Courses").get()
-                    .addOnSuccessListener { querySnapshot ->
-                        for (document in querySnapshot) {
-                            if (document.get("Name_Course") == addNameCourse.text.toString()) {
+                database.child("Lecturer/$idLecturer/Courses").get()
+                    .addOnSuccessListener { dataSnapshot ->
+                        for (document in dataSnapshot.children) {
+                            if (document.child("Name_Course").value.toString() == addNameCourse.text.toString()) {
                                 Name_Course = "Name_Course"
                                 Toast.makeText(
                                     context,
@@ -76,7 +79,7 @@ class AddCourseFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                            if (document.get("Number_Course") == addNumberCourse.text.toString()) {
+                            if (document.child("Number_Course").value.toString() == addNumberCourse.text.toString()) {
                                 Number_Course = "Number_Course"
                                 Toast.makeText(
                                     context,
@@ -96,15 +99,14 @@ class AddCourseFragment : Fragment() {
                             builder.setMessage("Do you want to Add the Course?")
                             builder.setPositiveButton("Yes") { _, _ ->
                                 addCourse(
-                                    id.toString(),
+                                    idCourse.toString(),
                                     addNameCourse.text.toString(),
                                     addNumberCourse.text.toString(),
-                                    lec
+                                    lec,
+                                    idLecturer
                                 )
                                 Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT)
                                     .show()
-                                addNameCourse.text.clear()
-                                addNumberCourse.text.clear()
                                 findNavController().navigate(R.id.action_add_to_home)
                             }
                             builder.setNegativeButton("No") { d, _ ->
@@ -114,32 +116,31 @@ class AddCourseFragment : Fragment() {
                             builder.create().show()
                         }
                     }
-                }, 1500)
+                }, 1000)
             }
         }
         return view
     }
 
     private fun addCourse(
-        id: String,
+        id_Course: String,
         Name_Course: String,
         Number_Course: String,
-        Lecturer: String
+        Lecturer: String,
+        idLecturer: String
     ) {
         val course = hashMapOf(
-            "id" to id,
+            "id_Course" to id_Course,
             "Name_Course" to Name_Course,
             "Number_Course" to Number_Course,
             "Lecturer" to Lecturer,
         )
-        db!!.collection("Courses").add(course)
+        database.child("Lecturer/$idLecturer/Courses/$id_Course").setValue(course)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val toolbar = view.findViewById<Toolbar>(R.id.addCourse_toolbar)
         NavigationUI.setupWithNavController(toolbar, findNavController())
     }
-
 }

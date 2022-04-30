@@ -1,6 +1,5 @@
 package com.example.myapplication3.navBottom.bottomNav
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.myapplication3.R
-import com.example.myapplication3.logIn.MainActivity
 import com.example.myapplication3.navBottom.bottomNav.BackButtonBehaviour.POP_HOST_FRAGMENT
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class BottomNavFragment : Fragment() {
@@ -26,7 +24,7 @@ class BottomNavFragment : Fragment() {
     private var bottomNavSelectedItemId = R.id.home
 
     lateinit var auth: FirebaseAuth
-    var db: FirebaseFirestore? = null
+    lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +33,7 @@ class BottomNavFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_bottom_nav, container, false)
 
         auth = Firebase.auth
-        db = Firebase.firestore
+        database = Firebase.database.reference
 
         return view
     }
@@ -90,27 +88,24 @@ class BottomNavFragment : Fragment() {
         toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.addsCourse -> {
-                    db!!.collection("Lecturer").get()
-                        .addOnSuccessListener { querySnapshot ->
-                            for (document in querySnapshot) {
-                                if (document.get("Email") == auth.currentUser!!.email) {
-                                    findNavController().navigate(R.id.addsCourse)
-
-                                }
+                    database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+                        for (document in dataSnapshot.children) {
+                            if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                                findNavController().navigate(R.id.addsCourse)
                             }
                         }
-                    db!!.collection("Student").get()
-                        .addOnSuccessListener { querySnapshot ->
-                            for (document in querySnapshot) {
-                                if (document.get("Email") == auth.currentUser!!.email) {
-                                    Toast.makeText(
-                                        context, "It's not for you, only for Lecturer",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-
-                                }
+                    }
+                    database.child("Student").get().addOnSuccessListener { dataSnapshot ->
+                        for (document in dataSnapshot.children) {
+                            if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                                Toast.makeText(
+                                    context,
+                                    "It's not for you, only for Lecturer",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
+                    }
                     true
                 }
                 R.id.searchCourse -> {

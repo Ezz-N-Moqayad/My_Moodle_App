@@ -1,54 +1,151 @@
 package com.example.myapplication3.navBottom.homeScreen.course
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
 import com.example.myapplication3.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class AddAssignment : AppCompatActivity() {
 
-    private lateinit var textViewAss: TextView
-    private lateinit var textView2Ass: TextView
-    private lateinit var textView3Ass: TextView
+    private lateinit var addNameAss: EditText
+    private lateinit var addNumberAss: EditText
+    private lateinit var addAss: Button
     private lateinit var backPageCourseAss: ImageView
 
+    lateinit var database: DatabaseReference
     lateinit var auth: FirebaseAuth
-    var db: FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_assignment)
 
-        textViewAss = findViewById(R.id.textViewAss)
-        textView2Ass = findViewById(R.id.textView2Ass)
-        textView3Ass = findViewById(R.id.textView3Ass)
+        addNameAss = findViewById(R.id.addNameAss)
+        addNumberAss = findViewById(R.id.addNumberAss)
+        addAss = findViewById(R.id.addAss)
         backPageCourseAss = findViewById(R.id.backPageCourseAss)
 
         auth = Firebase.auth
-        db = Firebase.firestore
+        database = Firebase.database.reference
+        val idAssignment = System.currentTimeMillis()
+        var idLecturer = ""
 
-        textView3Ass.text = intent.getStringExtra("Name_Course").toString()
-        textView2Ass.text = intent.getStringExtra("Number_Course").toString()
-        textViewAss.text = intent.getStringExtra("Lecturer").toString()
-
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    idLecturer = document.child("id_Lecturer").value.toString()
+                }
+            }
+        }
         backPageCourseAss.setOnClickListener {
             intent(Intent(this, CoursePage::class.java))
         }
+
+        addAss.setOnClickListener {
+            val idCourse = intent.getStringExtra("id_Course").toString()
+            if (addNameAss.text.isEmpty() || addNumberAss.text.isEmpty()) {
+                Toast.makeText(this, "File Fields", Toast.LENGTH_SHORT).show()
+            } else if (addNumberAss.text.length != 6) {
+                Toast.makeText(
+                    this, "Assignment number must consist of 6 digits", Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                var nameAssignment = "null"
+                var numberAssignment = "null"
+                database.child("Lecturer/$idLecturer/Courses/$idCourse/Assignment").get()
+                    .addOnSuccessListener { dataSnapshot ->
+                        for (document in dataSnapshot.children) {
+                            if (document.child("Name_Assignment").value.toString() == addNameAss.text.toString()) {
+                                nameAssignment = "nameAssignment"
+                                Toast.makeText(
+                                    this, "This ${addNameAss.text} is already in use, try again",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            if (document.child("Number_Assignment").value.toString() == addNumberAss.text.toString()) {
+                                numberAssignment = "numberAssignment"
+                                Toast.makeText(
+                                    this, "This ${addNumberAss.text} is already in use, try again",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+
+                Handler().postDelayed({
+                    when {
+                        nameAssignment == "nameAssignment" -> {}
+                        numberAssignment == "numberAssignment" -> {}
+                        else -> {
+                            val builder = AlertDialog.Builder(this)
+                            builder.setTitle("Add Assignment")
+                            builder.setMessage("Do you want to Add the Assignment?")
+                            builder.setPositiveButton("Yes") { _, _ ->
+                                addAssignment(
+                                    idAssignment.toString(),
+                                    addNameAss.text.toString(),
+                                    addNumberAss.text.toString(),
+                                    intent.getStringExtra("Name_Course").toString(),
+                                    intent.getStringExtra("Number_Course").toString(),
+                                    intent.getStringExtra("Lecturer").toString(),
+                                    idLecturer
+                                )
+                                Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT)
+                                    .show()
+                                intent(Intent(this, CoursePage::class.java))
+                            }
+                            builder.setNegativeButton("No") { d, _ ->
+                                d.dismiss()
+                                intent(Intent(this, CoursePage::class.java))
+                            }
+                            builder.create().show()
+                        }
+                    }
+                }, 1000)
+            }
+        }
+    }
+
+    private fun addAssignment(
+        id_Assignment: String,
+        Name_Assignment: String,
+        Number_Assignment: String,
+        Name_Course: String,
+        Number_Course: String,
+        Lecturer: String,
+        idLecturer: String
+    ) {
+        val assignment = hashMapOf(
+            "id_Assignment" to id_Assignment,
+            "Name_Assignment" to Name_Assignment,
+            "Number_Assignment" to Number_Assignment,
+            "Name_Course" to Name_Course,
+            "Number_Course" to Number_Course,
+            "Lecturer" to Lecturer,
+        )
+        val idCourse = intent.getStringExtra("id_Course").toString()
+        database.child("Lecturer/$idLecturer/Courses/$idCourse/Assignment/$id_Assignment")
+            .setValue(assignment)
     }
 
     fun intent(Intent_Page: Intent) {
-        val i = Intent_Page
-        i.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
-        i.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
-        i.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
-        i.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())
-        startActivity(i)
+        Intent_Page.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
+        Intent_Page.putExtra("id_Lecturer", intent.getStringExtra("id_Lecturer").toString())
+        Intent_Page.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
+        Intent_Page.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
+        Intent_Page.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())
+        startActivity(Intent_Page)
     }
 }

@@ -1,6 +1,8 @@
 package com.example.myapplication3.navBottom.profilePage
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +10,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.myapplication3.R
+import com.example.myapplication3.logIn.LogInActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
@@ -25,8 +28,10 @@ class Profile : Fragment() {
     private lateinit var et_emailPro: EditText
     private lateinit var et_mobilePro: EditText
     private lateinit var editPro: TextView
+    private lateinit var btn_loginOut: Button
+    private var edo = 0
 
-    var db: FirebaseFirestore? = null
+    lateinit var database: DatabaseReference
     lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -42,8 +47,9 @@ class Profile : Fragment() {
         et_emailPro = view.findViewById(R.id.et_emailPro)
         et_mobilePro = view.findViewById(R.id.et_mobilePro)
         editPro = view.findViewById(R.id.editPro)
+        btn_loginOut = view.findViewById(R.id.btn_loginOut)
 
-        db = Firebase.firestore
+        database = Firebase.database.reference
         auth = Firebase.auth
 
         getProfileData()
@@ -61,6 +67,18 @@ class Profile : Fragment() {
                 )
             }
             picker!!.show()
+        }
+        btn_loginOut.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("LogOut")
+            builder.setMessage("Do you want to Logout?")
+            builder.setPositiveButton("Yes") { _, _ ->
+                startActivity(Intent(context, LogInActivity::class.java))
+            }
+            builder.setNegativeButton("No") { d, _ ->
+                d.dismiss()
+            }
+            builder.create().show()
         }
 
         disableEdit()
@@ -98,100 +116,91 @@ class Profile : Fragment() {
         return view
     }
 
-    fun getProfileData() {
-        db!!.collection("Student").get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot) {
-                    if (document.get("Email") == auth.currentUser!!.email) {
-                        et_fNamePro.setText(document.get("First_Name").toString())
-                        et_mNamePro.setText(document.get("Middle_Name").toString())
-                        et_lNamePro.setText(document.get("Family_Name").toString())
-                        et_emailPro.setText(document.get("Email").toString())
-                        et_birth_datePro.setText(document.get("Birth_Date").toString())
-                        et_addressPro.setText(document.get("Address").toString())
-                        et_mobilePro.setText(document.get("Mobile").toString())
-                    }
+    private fun getProfileData() {
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    et_fNamePro.setText(document.child("First_Name").value.toString())
+                    et_mNamePro.setText(document.child("Middle_Name").value.toString())
+                    et_lNamePro.setText(document.child("Family_Name").value.toString())
+                    et_emailPro.setText(document.child("Email").value.toString())
+                    et_birth_datePro.setText(document.child("Birth_Date").value.toString())
+                    et_addressPro.setText(document.child("Address").value.toString())
+                    et_mobilePro.setText(document.child("Mobile").value.toString())
                 }
             }
-        db!!.collection("Lecturer").get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot) {
-                    if (document.get("Email") == auth.currentUser!!.email) {
-                        et_fNamePro.setText(document.get("First_Name").toString())
-                        et_mNamePro.setText(document.get("Middle_Name").toString())
-                        et_lNamePro.setText(document.get("Family_Name").toString())
-                        et_emailPro.setText(document.get("Email").toString())
-                        et_birth_datePro.setText(document.get("Birth_Date").toString())
-                        et_addressPro.setText(document.get("Address").toString())
-                        et_mobilePro.setText(document.get("Mobile").toString())
-                    }
+        }
+        database.child("Student").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    et_fNamePro.setText(document.child("First_Name").value.toString())
+                    et_mNamePro.setText(document.child("Middle_Name").value.toString())
+                    et_lNamePro.setText(document.child("Family_Name").value.toString())
+                    et_emailPro.setText(document.child("Email").value.toString())
+                    et_birth_datePro.setText(document.child("Birth_Date").value.toString())
+                    et_addressPro.setText(document.child("Address").value.toString())
+                    et_mobilePro.setText(document.child("Mobile").value.toString())
                 }
             }
+        }
     }
 
     private fun editUser() {
-        db!!.collection("Student").get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot) {
-                    if (document.get("Email") == auth.currentUser!!.email) {
-                        db!!.collection("Student").document(document.id)
-                            .update("First_Name", et_fNamePro.text.toString())
-                        db!!.collection("Student").document(document.id)
-                            .update("Middle_Name", et_mNamePro.text.toString())
-                        db!!.collection("Student").document(document.id)
-                            .update("Family_Name", et_lNamePro.text.toString())
-                        db!!.collection("Student").document(document.id)
-                            .update("Birth_Date", et_birth_datePro.text.toString())
-                        db!!.collection("Student").document(document.id)
-                            .update("Address", et_addressPro.text.toString())
-                        db!!.collection("Student").document(document.id)
-                            .update("Mobile", et_mobilePro.text.toString())
-                    }
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    val lecturer = mapOf(
+                        "First_Name" to et_fNamePro.text.toString(),
+                        "Middle_Name" to et_mNamePro.text.toString(),
+                        "Family_Name" to et_lNamePro.text.toString(),
+                        "Birth_Date" to et_birth_datePro.text.toString(),
+                        "Address" to et_addressPro.text.toString(),
+                        "Mobile" to et_mobilePro.text.toString()
+                    )
+                    val idLecturer = document.child("id_Lecturer").value.toString()
+                    database.child("Lecturer").child(idLecturer).updateChildren(lecturer)
                 }
             }
-
-        db!!.collection("Lecturer").get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot) {
-                    if (document.get("Email") == auth.currentUser!!.email) {
-                        db!!.collection("Lecturer").document(document.id)
-                            .update("First_Name", et_fNamePro.text.toString())
-                        db!!.collection("Lecturer").document(document.id)
-                            .update("Middle_Name", et_mNamePro.text.toString())
-                        db!!.collection("Lecturer").document(document.id)
-                            .update("Family_Name", et_lNamePro.text.toString())
-                        db!!.collection("Lecturer").document(document.id)
-                            .update("Birth_Date", et_birth_datePro.text.toString())
-                        db!!.collection("Lecturer").document(document.id)
-                            .update("Address", et_addressPro.text.toString())
-                        db!!.collection("Lecturer").document(document.id)
-                            .update("Mobile", et_mobilePro.text.toString())
-                    }
+        }
+        database.child("Student").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    val student = mapOf(
+                        "First_Name" to et_fNamePro.text.toString(),
+                        "Middle_Name" to et_mNamePro.text.toString(),
+                        "Family_Name" to et_lNamePro.text.toString(),
+                        "Birth_Date" to et_birth_datePro.text.toString(),
+                        "Address" to et_addressPro.text.toString(),
+                        "Mobile" to et_mobilePro.text.toString()
+                    )
+                    val idStudent = document.child("id_Student").value.toString()
+                    database.child("Student").child(idStudent).updateChildren(student)
                 }
             }
-        db!!.collection("Courses").get()
-            .addOnSuccessListener { querySnapshot1 ->
-                for (document1 in querySnapshot1) {
-                    db!!.collection("Lecturer").get()
-                        .addOnSuccessListener { querySnapshot2 ->
-                            for (document2 in querySnapshot2) {
-                                if (document2.get("Email") == auth.currentUser!!.email) {
-                                    if (document1.get("Lecturer") == "${
-                                            document2.get("First_Name").toString()
-                                        } ${
-                                            document2.get("Middle_Name").toString()
-                                        } ${document2.get("Family_Name").toString()}"
-                                    ) {
-                                        db!!.collection("Courses").document(document1.id).update(
-                                            "Lecturer",
-                                            "${et_fNamePro.text} ${et_mNamePro.text} ${et_lNamePro.text}"
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                }
-            }
+        }
+//        db!!.collection("Courses").get()
+//            .addOnSuccessListener { querySnapshot1 ->
+//                for (document1 in querySnapshot1) {
+//                    db!!.collection("Lecturer").get()
+//                        .addOnSuccessListener { querySnapshot2 ->
+//                            for (document2 in querySnapshot2) {
+//                                if (document2.get("Email") == auth.currentUser!!.email) {
+//                                    if (document1.get("Lecturer") == "${
+//                                            document2.get("First_Name").toString()
+//                                        } ${
+//                                            document2.get("Middle_Name").toString()
+//                                        } ${document2.get("Family_Name").toString()}"
+//                                    ) {
+//                                        db!!.collection("Courses").document(document1.id).update(
+//                                            "Lecturer",
+//                                            "${et_fNamePro.text} ${et_mNamePro.text} ${et_lNamePro.text}"
+//                                        )
+//                                    }
+//                                }
+//                            }
+//                        }
+//                }
+//            }
     }
 
     private fun disableEdit() {

@@ -9,8 +9,8 @@ import android.widget.*
 import com.example.myapplication3.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
@@ -30,7 +30,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var tv_login: TextView
 
     lateinit var auth: FirebaseAuth
-    var db: FirebaseFirestore? = null
+    lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class SignUpActivity : AppCompatActivity() {
         tv_login = findViewById(R.id.tv_login)
 
         auth = Firebase.auth
-        db = Firebase.firestore
+        database = Firebase.database.reference
 
         et_birth_date.setOnClickListener {
             val currentDate = Calendar.getInstance()
@@ -80,9 +80,9 @@ class SignUpActivity : AppCompatActivity() {
             if (et_fName.text.isEmpty() || et_mName.text.isEmpty() || et_lName.text.isEmpty() || et_birth_date.text.isEmpty() || et_address.text.isEmpty() ||
                 et_email.text.isEmpty() || et_mobile.text.isEmpty() || categorySpinner == "Choose your category" || et_password.text.isEmpty() || et_confirm_password.text.isEmpty()
             ) {
-                Toast.makeText(this, "التسجيل غير كامل", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Registration is Incomplete", Toast.LENGTH_SHORT).show()
             } else if (et_password.text.toString() != et_confirm_password.text.toString()) {
-                Toast.makeText(this, "كلمة السر غير متطابقة", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Password Does Not Match", Toast.LENGTH_SHORT).show()
             } else {
                 createNewAccount(
                     et_email.text.toString(),
@@ -115,7 +115,7 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this, "Successfully registered", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, LogInActivity::class.java))
             } else {
-                Toast.makeText(this, "فشل في التسجيل", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to register", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -133,7 +133,7 @@ class SignUpActivity : AppCompatActivity() {
         Password: String
     ) {
         val lecturer = hashMapOf(
-            "id" to id,
+            "id_Lecturer" to id,
             "First_Name" to First_Name,
             "Middle_Name" to Middle_Name,
             "Family_Name" to Family_Name,
@@ -145,7 +145,7 @@ class SignUpActivity : AppCompatActivity() {
             "Password" to Password
         )
         val student = hashMapOf(
-            "id" to id,
+            "id_Student" to id,
             "First_Name" to First_Name,
             "Middle_Name" to Middle_Name,
             "Family_Name" to Family_Name,
@@ -159,13 +159,10 @@ class SignUpActivity : AppCompatActivity() {
 
         when (Category) {
             "Lecturer" -> {
-                db!!.collection("Lecturer").add(lecturer)
+                database.child("Lecturer/$id").setValue(lecturer)
             }
             "Student" -> {
-                db!!.collection("Student").add(student)
-            }
-            else -> {
-                Toast.makeText(this, "2التسجيل غير كامل", Toast.LENGTH_SHORT).show()
+                database.child("Student/$id").setValue(student)
             }
         }
     }

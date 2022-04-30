@@ -2,26 +2,23 @@ package com.example.myapplication3.navBottom.homeScreen
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication3.R
 import com.example.myapplication3.modle.Course
 import com.example.myapplication3.navBottom.homeScreen.course.CoursePage
-import com.example.myapplication3.navBottom.listscreen.MyAdapter
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.example.myapplication3.navBottom.homeScreen.course.ViewHolder
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class HomeLecturer : Fragment() {
@@ -29,8 +26,10 @@ class HomeLecturer : Fragment() {
     private lateinit var rvCourseLecturer: RecyclerView
 
     lateinit var auth: FirebaseAuth
-    private var db: FirebaseFirestore? = null
-    private var adapter: FirestoreRecyclerAdapter<Course, CourseViewHolder>? = null
+    lateinit var database: DatabaseReference;
+    private var adapter: FirebaseRecyclerAdapter<Course, ViewHolder.CourseViewHolder>? = null
+
+    private val delayMillis: Long = 500
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,26 +39,52 @@ class HomeLecturer : Fragment() {
         rvCourseLecturer = view.findViewById(R.id.rvCourseLecturer)
 
         auth = Firebase.auth
-        db = Firebase.firestore
+        database = Firebase.database.reference
 
-        val query = db!!.collection("Courses")
+        var idLecturer = ""
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    idLecturer = document.child("id_Lecturer").value.toString()
+                }
+            }
+        }
+        Handler().postDelayed({
+            getAllCourses(rvCourseLecturer, idLecturer)
+        }, delayMillis)
+
+        return view
+    }
+
+    private fun getAllCourses(rvCourseLecturer: RecyclerView, idLecturer: String) {
+
+        val query = database.child("Lecturer/$idLecturer/Courses")
         val options =
-            FirestoreRecyclerOptions.Builder<Course>().setQuery(query, Course::class.java).build()
-
-        adapter = object : FirestoreRecyclerAdapter<Course, CourseViewHolder>(options) {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
-                val root = LayoutInflater.from(context).inflate(R.layout.course_item, parent, false)
-                return CourseViewHolder(root)
+            FirebaseRecyclerOptions.Builder<Course>().setQuery(query, Course::class.java).build()
+        adapter = object :
+            FirebaseRecyclerAdapter<Course, ViewHolder.CourseViewHolder>(options) {
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): ViewHolder.CourseViewHolder {
+                val root = LayoutInflater.from(context)
+                    .inflate(R.layout.course_item, parent, false)
+                return ViewHolder.CourseViewHolder(root)
             }
 
-            override fun onBindViewHolder(holder: CourseViewHolder, position: Int, model: Course) {
+            override fun onBindViewHolder(
+                holder: ViewHolder.CourseViewHolder,
+                position: Int,
+                model: Course
+            ) {
                 holder.course_name.text = model.Name_Course
                 holder.course_lecturer.text = model.Lecturer
                 holder.course_number.text = model.Number_Course
 
                 holder.course_layout.setOnClickListener {
                     val i = Intent(context, CoursePage::class.java)
-                    i.putExtra("id_Course", model.id)
+                    i.putExtra("id_Lecturer", idLecturer)
+                    i.putExtra("id_Course", model.id_Course)
                     i.putExtra("Name_Course", model.Name_Course)
                     i.putExtra("Number_Course", model.Number_Course)
                     i.putExtra("Lecturer", model.Lecturer)
@@ -69,24 +94,19 @@ class HomeLecturer : Fragment() {
         }
         rvCourseLecturer.layoutManager = LinearLayoutManager(context)
         rvCourseLecturer.adapter = adapter
-
-        return view
-    }
-
-    class CourseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var course_name = view.findViewById<TextView>(R.id.course_name)!!
-        var course_lecturer = view.findViewById<TextView>(R.id.course_lecturer)!!
-        var course_number = view.findViewById<TextView>(R.id.course_number)!!
-        var course_layout = view.findViewById<LinearLayout>(R.id.course_layout)!!
     }
 
     override fun onStart() {
         super.onStart()
-        adapter!!.startListening()
+        Handler().postDelayed({
+            adapter!!.startListening()
+        }, delayMillis)
     }
 
     override fun onStop() {
         super.onStop()
-        adapter!!.stopListening()
+        Handler().postDelayed({
+            adapter!!.stopListening()
+        }, delayMillis)
     }
 }
