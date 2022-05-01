@@ -23,7 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 
 class AddVideo : AppCompatActivity() {
 
-    private lateinit var titleEt: EditText
+    private lateinit var addNameVideo: EditText
     private lateinit var uploadVideoBtn: Button
     private lateinit var pickVideoFab: FloatingActionButton
     private lateinit var backPageCourseVideo: ImageView
@@ -41,7 +41,7 @@ class AddVideo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_video)
 
-        titleEt = findViewById(R.id.titleEt)
+        addNameVideo = findViewById(R.id.addNameVideo)
         uploadVideoBtn = findViewById(R.id.uploadVideoBtn)
         pickVideoFab = findViewById(R.id.pickVideoFab)
         backPageCourseVideo = findViewById(R.id.backPageCourseVideo)
@@ -70,21 +70,22 @@ class AddVideo : AppCompatActivity() {
         uploadVideoBtn.setOnClickListener {
             val idCourse = intent.getStringExtra("id_Course").toString()
             when {
-                titleEt.text.isEmpty() -> {
-                    Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show()
+                addNameVideo.text.isEmpty() -> {
+                    Toast.makeText(this, "Video Name is required", Toast.LENGTH_SHORT).show()
                 }
                 videoUri == null -> {
-                    Toast.makeText(this, "Pick the video first", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Pick the Video First", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
                     var nameVideo = "null"
                     database.child("Lecturer/$idLecturer/Courses/$idCourse/Video").get()
                         .addOnSuccessListener { dataSnapshot ->
                             for (document in dataSnapshot.children) {
-                                if (document.child("Name_Video").value.toString() == titleEt.text.toString()) {
+                                if (document.child("Name_Video").value.toString() == addNameVideo.text.toString()) {
                                     nameVideo = "nameVideo"
                                     Toast.makeText(
-                                        this, "This ${titleEt.text} is already in use, try again",
+                                        this,
+                                        "This ${addNameVideo.text} is already in use, try again",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -121,7 +122,6 @@ class AddVideo : AppCompatActivity() {
         val idVideo = System.currentTimeMillis()
         val filePathAndName = "Videos/video_$idVideo"
         val storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
-
         storageReference.putFile(videoUri!!).addOnSuccessListener { taskSnapshot ->
             val uriTask = taskSnapshot.storage.downloadUrl
             while (!uriTask.isSuccessful);
@@ -129,17 +129,20 @@ class AddVideo : AppCompatActivity() {
             if (uriTask.isSuccessful) {
                 addVideo(
                     idVideo.toString(),
-                    titleEt.text.toString(),
+                    addNameVideo.text.toString(),
                     downloadUri.toString(),
                     intent.getStringExtra("Name_Course").toString(),
                     intent.getStringExtra("Number_Course").toString(),
                     intent.getStringExtra("Lecturer").toString(),
                     idLecturer
                 )
-                Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT)
-                    .show()
+                hideDialog()
+                intent(Intent(this, CoursePage::class.java))
+                Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                intent(Intent(this, CoursePage::class.java))
+                Toast.makeText(this, "Add Failed", Toast.LENGTH_SHORT).show()
             }
-            intent(Intent(this, CoursePage::class.java))
         }.addOnFailureListener { e ->
             hideDialog()
             intent(Intent(this, CoursePage::class.java))
@@ -261,7 +264,7 @@ class AddVideo : AppCompatActivity() {
                 videoUri = data!!.data
             }
         } else {
-            Toast.makeText(this, "Canclled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -269,7 +272,7 @@ class AddVideo : AppCompatActivity() {
     private fun showDialog() {
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Please wait")
-        progressDialog.setMessage("Uploading Video. ..")
+        progressDialog.setMessage("Uploading Video...")
         progressDialog.setCancelable(false)
         progressDialog.show()
     }

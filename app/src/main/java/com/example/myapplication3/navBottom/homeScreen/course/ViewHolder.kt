@@ -16,7 +16,6 @@ class ViewHolder {
 
     class FileViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var file_course_name = view.findViewById<TextView>(R.id.file_course_name)!!
-        var file_course_number = view.findViewById<TextView>(R.id.file_course_number)!!
     }
 
     class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,5 +24,7 @@ class ViewHolder {
 
     class AssignmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var assignment_course_name = view.findViewById<TextView>(R.id.assignment_course_name)!!
+        var assignment_course_number = view.findViewById<TextView>(R.id.assignment_course_number)!!
+
     }
 }

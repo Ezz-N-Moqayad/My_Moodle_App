@@ -142,8 +142,6 @@ class CoursePage : AppCompatActivity() {
                     model: FileCourse
                 ) {
                     holder.file_course_name.text = model.Name_File
-                    holder.file_course_number.text = model.Number_File
-
                 }
             }
         rvFile.layoutManager = LinearLayoutManager(this)
@@ -181,6 +179,7 @@ class CoursePage : AppCompatActivity() {
                     model: AssignmentCourse
                 ) {
                     holder.assignment_course_name.text = model.Name_Assignment
+                    holder.assignment_course_number.text = model.Number_Assignment
                 }
             }
         rvAss.layoutManager = LinearLayoutManager(this)

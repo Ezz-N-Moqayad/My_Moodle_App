@@ -51,8 +51,9 @@
 
     <EditText
         android:id="@+id/addNameFile"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="150dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/back"
@@ -61,28 +62,12 @@
         android:paddingStart="10dp"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/addNumberFile"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/uploadFileBtn"
+        app:layout_constraintEnd_toStartOf="@+id/pickFileFab"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/addNumberFile"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/back"
-        android:hint="Fill Number"
-        android:inputType="number"
-        android:paddingStart="10dp"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addNameFile" />
-
-
     <Button
-        android:id="@+id/addFile"
+        android:id="@+id/uploadFileBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -91,6 +76,17 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addNumberFile" />
+        app:layout_constraintTop_toBottomOf="@+id/addNameFile" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/pickFileFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toTopOf="@+id/uploadFileBtn"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@
         android:title="@string/title_register" />
     <item
         android:id="@+id/home3"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_account_circle"
         android:contentDescription="@string/cd_home"
-        android:title="Home3" />
+        android:title="Profile" />
 </menu>
