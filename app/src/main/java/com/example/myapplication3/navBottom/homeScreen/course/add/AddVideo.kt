@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.homeScreen.course
+package com.example.myapplication3.navBottom.homeScreen.course.add
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myapplication3.R
+import com.example.myapplication3.navBottom.homeScreen.course.CoursePage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -131,9 +132,7 @@ class AddVideo : AppCompatActivity() {
                     idVideo.toString(),
                     addNameVideo.text.toString(),
                     downloadUri.toString(),
-                    intent.getStringExtra("Name_Course").toString(),
                     intent.getStringExtra("Number_Course").toString(),
-                    intent.getStringExtra("Lecturer").toString(),
                     idLecturer
                 )
                 hideDialog()
@@ -154,18 +153,15 @@ class AddVideo : AppCompatActivity() {
         id_Video: String,
         Name_Video: String,
         Uri_Video: String,
-        Name_Course: String,
         Number_Course: String,
-        Lecturer: String,
         idLecturer: String
     ) {
         val video = hashMapOf(
             "id_Video" to id_Video,
             "Name_Video" to Name_Video,
             "Uri_Video" to Uri_Video,
-            "Name_Course" to Name_Course,
             "Number_Course" to Number_Course,
-            "Lecturer" to Lecturer,
+            "idLecturer" to idLecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
         database.child("Lecturer/$idLecturer/Courses/$idCourse/Video/$id_Video").setValue(video)

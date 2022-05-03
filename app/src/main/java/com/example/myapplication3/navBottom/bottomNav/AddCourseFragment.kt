@@ -136,6 +136,7 @@ class AddCourseFragment : Fragment() {
             "Lecturer" to Lecturer,
         )
         database.child("Lecturer/$idLecturer/Courses/$id_Course").setValue(course)
+        database.child("Courses/$id_Course").setValue(course)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

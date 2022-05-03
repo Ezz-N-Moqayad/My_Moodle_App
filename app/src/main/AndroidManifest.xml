@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.myapplication3">
+    package="com.example.myapplication3" >
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
@@ -15,15 +15,18 @@
         android:label="Moodle"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication3">
+        android:theme="@style/Theme.MyApplication3" >
         <activity
-            android:name=".navBottom.homeScreen.course.AddVideo"
+            android:name=".navBottom.homeScreen.course.AssignmentPage"
             android:exported="false" />
         <activity
-            android:name=".navBottom.homeScreen.course.AddAssignment"
+            android:name=".navBottom.homeScreen.course.add.AddVideo"
             android:exported="false" />
         <activity
-            android:name=".navBottom.homeScreen.course.AddFile"
+            android:name=".navBottom.homeScreen.course.add.AddAssignment"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.add.AddFile"
             android:exported="false" />
         <activity
             android:name=".navBottom.homeScreen.course.CoursePage"
@@ -39,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".logIn.SplashActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

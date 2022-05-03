@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.homeScreen.course
+package com.example.myapplication3.navBottom.homeScreen.course.add
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -10,18 +10,18 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.myapplication3.R
+import com.example.myapplication3.navBottom.homeScreen.course.CoursePage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class AddAssignment : AppCompatActivity() {
 
     private lateinit var addNameAss: EditText
     private lateinit var addNumberAss: EditText
+    private lateinit var addRequiredAss: EditText
     private lateinit var addAss: Button
     private lateinit var backPageCourseAss: ImageView
 
@@ -34,6 +34,7 @@ class AddAssignment : AppCompatActivity() {
 
         addNameAss = findViewById(R.id.addNameAss)
         addNumberAss = findViewById(R.id.addNumberAss)
+        addRequiredAss = findViewById(R.id.addRequiredAss)
         addAss = findViewById(R.id.addAss)
         backPageCourseAss = findViewById(R.id.backPageCourseAss)
 
@@ -55,7 +56,7 @@ class AddAssignment : AppCompatActivity() {
 
         addAss.setOnClickListener {
             val idCourse = intent.getStringExtra("id_Course").toString()
-            if (addNameAss.text.isEmpty() || addNumberAss.text.isEmpty()) {
+            if (addNameAss.text.isEmpty() || addNumberAss.text.isEmpty() || addRequiredAss.text.isEmpty()) {
                 Toast.makeText(this, "File Fields", Toast.LENGTH_SHORT).show()
             } else if (addNumberAss.text.length != 6) {
                 Toast.makeText(
@@ -97,9 +98,8 @@ class AddAssignment : AppCompatActivity() {
                                     idAssignment.toString(),
                                     addNameAss.text.toString(),
                                     addNumberAss.text.toString(),
-                                    intent.getStringExtra("Name_Course").toString(),
+                                    addRequiredAss.text.toString(),
                                     intent.getStringExtra("Number_Course").toString(),
-                                    intent.getStringExtra("Lecturer").toString(),
                                     idLecturer
                                 )
                                 Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT)
@@ -122,18 +122,17 @@ class AddAssignment : AppCompatActivity() {
         id_Assignment: String,
         Name_Assignment: String,
         Number_Assignment: String,
-        Name_Course: String,
+        Required_Assignment: String,
         Number_Course: String,
-        Lecturer: String,
         idLecturer: String
     ) {
         val assignment = hashMapOf(
             "id_Assignment" to id_Assignment,
             "Name_Assignment" to Name_Assignment,
             "Number_Assignment" to Number_Assignment,
-            "Name_Course" to Name_Course,
+            "Required_Assignment" to Required_Assignment,
             "Number_Course" to Number_Course,
-            "Lecturer" to Lecturer,
+            "idLecturer" to idLecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
         database.child("Lecturer/$idLecturer/Courses/$idCourse/Assignment/$id_Assignment")

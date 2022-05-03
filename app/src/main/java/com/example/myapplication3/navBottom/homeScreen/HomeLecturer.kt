@@ -80,7 +80,6 @@ class HomeLecturer : Fragment() {
                 holder.course_name.text = model.Name_Course
                 holder.course_lecturer.text = model.Lecturer
                 holder.course_number.text = model.Number_Course
-
                 holder.course_layout.setOnClickListener {
                     val i = Intent(context, CoursePage::class.java)
                     i.putExtra("id_Lecturer", idLecturer)

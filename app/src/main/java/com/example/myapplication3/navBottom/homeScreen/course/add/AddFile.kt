@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.homeScreen.course
+package com.example.myapplication3.navBottom.homeScreen.course.add
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.myapplication3.R
+import com.example.myapplication3.navBottom.homeScreen.course.CoursePage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -121,9 +122,7 @@ class AddFile : AppCompatActivity() {
                     idFile.toString(),
                     addNameFile.text.toString(),
                     downloadUri.toString(),
-                    intent.getStringExtra("Name_Course").toString(),
                     intent.getStringExtra("Number_Course").toString(),
-                    intent.getStringExtra("Lecturer").toString(),
                     idLecturer
                 )
                 hideDialog()
@@ -144,18 +143,15 @@ class AddFile : AppCompatActivity() {
         id_File: String,
         Name_File: String,
         Uri_File: String,
-        Name_Course: String,
         Number_Course: String,
-        Lecturer: String,
         idLecturer: String
     ) {
         val file = hashMapOf(
             "id_File" to id_File,
             "Name_File" to Name_File,
             "Uri_File" to Uri_File,
-            "Name_Course" to Name_Course,
             "Number_Course" to Number_Course,
-            "Lecturer" to Lecturer,
+            "idLecturer" to idLecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
         database.child("Lecturer/$idLecturer/Courses/$idCourse/File/$id_File").setValue(file)

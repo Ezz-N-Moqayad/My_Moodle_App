@@ -13,6 +13,9 @@ import com.example.myapplication3.logIn.MainActivity
 import com.example.myapplication3.modle.AssignmentCourse
 import com.example.myapplication3.modle.FileCourse
 import com.example.myapplication3.modle.VideoCourse
+import com.example.myapplication3.navBottom.homeScreen.course.add.AddAssignment
+import com.example.myapplication3.navBottom.homeScreen.course.add.AddFile
+import com.example.myapplication3.navBottom.homeScreen.course.add.AddVideo
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -26,14 +29,14 @@ class CoursePage : AppCompatActivity() {
     private lateinit var rvFile: RecyclerView
     private lateinit var rvAss: RecyclerView
     private lateinit var rvVideo: RecyclerView
-    private lateinit var textViewCou: TextView
-    private lateinit var textView2Cou: TextView
-    private lateinit var textView3Cou: TextView
+    private lateinit var nameCourseCou: TextView
+    private lateinit var numberCourseCou: TextView
+    private lateinit var lecturerCou: TextView
     private lateinit var backHome: ImageView
     private lateinit var btnPopup: ImageView
 
     lateinit var auth: FirebaseAuth
-    lateinit var database: DatabaseReference;
+    lateinit var database: DatabaseReference
     private var adapterFile: FirebaseRecyclerAdapter<FileCourse, ViewHolder.FileViewHolder>? = null
     private var adapterAss: FirebaseRecyclerAdapter<AssignmentCourse, ViewHolder.AssignmentViewHolder>? =
         null
@@ -44,18 +47,18 @@ class CoursePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_page)
 
-        textViewCou = findViewById(R.id.textViewCou)
-        textView2Cou = findViewById(R.id.textView2Cou)
-        textView3Cou = findViewById(R.id.textView3Cou)
+        nameCourseCou = findViewById(R.id.nameCourseCou)
+        numberCourseCou = findViewById(R.id.numberCourseCou)
+        lecturerCou = findViewById(R.id.lecturerCou)
         backHome = findViewById(R.id.backHome)
         btnPopup = findViewById(R.id.btnPopup)
 
         auth = Firebase.auth
         database = Firebase.database.reference
 
-        textView3Cou.text = intent.getStringExtra("Name_Course").toString()
-        textView2Cou.text = intent.getStringExtra("Number_Course").toString()
-        textViewCou.text = intent.getStringExtra("Lecturer").toString()
+        nameCourseCou.text = intent.getStringExtra("Name_Course").toString()
+        numberCourseCou.text = intent.getStringExtra("Number_Course").toString()
+        lecturerCou.text = intent.getStringExtra("Lecturer").toString()
 
         getAllFile()
         getAllAssignment()
@@ -180,6 +183,18 @@ class CoursePage : AppCompatActivity() {
                 ) {
                     holder.assignment_course_name.text = model.Name_Assignment
                     holder.assignment_course_number.text = model.Number_Assignment
+                    holder.assignment_course_layout.setOnClickListener {
+                        intentAss(
+                            idLecturer,
+                            model.id_Assignment,
+                            model.Name_Assignment,
+                            model.Number_Assignment,
+                            model.Required_Assignment,
+                            model.Name_Course,
+                            model.Number_Course,
+                            model.Lecturer
+                        )
+                    }
                 }
             }
         rvAss.layoutManager = LinearLayoutManager(this)
@@ -219,6 +234,29 @@ class CoursePage : AppCompatActivity() {
             }
         rvVideo.layoutManager = LinearLayoutManager(this)
         rvVideo.adapter = adapterVideo
+    }
+
+    fun intentAss(
+        id_Lecturer: String,
+        id_Assignment: String,
+        Name_Assignment: String,
+        Number_Assignment: String,
+        Required_Assignment: String,
+        Name_Course: String,
+        Number_Course: String,
+        Lecturer: String
+    ) {
+        val i = Intent(this, AssignmentPage::class.java)
+        i.putExtra("id_Lecturer", id_Lecturer)
+        i.putExtra("id_Assignment", id_Assignment)
+        i.putExtra("Name_Assignment", Name_Assignment)
+        i.putExtra("Number_Assignment", Number_Assignment)
+        i.putExtra("Required_Assignment", Required_Assignment)
+        i.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
+        i.putExtra("Name_Course", Name_Course)
+        i.putExtra("Number_Course", Number_Course)
+        i.putExtra("Lecturer", Lecturer)
+        startActivity(i)
     }
 
     fun intent(Intent_Page: Intent) {

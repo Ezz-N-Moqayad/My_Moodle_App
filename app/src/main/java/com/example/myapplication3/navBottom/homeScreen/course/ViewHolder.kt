@@ -16,15 +16,17 @@ class ViewHolder {
 
     class FileViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var file_course_name = view.findViewById<TextView>(R.id.file_course_name)!!
+        var file_course_layout = view.findViewById<LinearLayout>(R.id.file_course_layout)!!
     }
 
     class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var video_course_name = view.findViewById<TextView>(R.id.video_course_name)!!
+        var video_course_layout = view.findViewById<LinearLayout>(R.id.video_course_layout)!!
     }
 
     class AssignmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var assignment_course_name = view.findViewById<TextView>(R.id.assignment_course_name)!!
         var assignment_course_number = view.findViewById<TextView>(R.id.assignment_course_number)!!
-
+        var assignment_course_layout = view.findViewById<LinearLayout>(R.id.assignment_course_layout)!!
     }
 }

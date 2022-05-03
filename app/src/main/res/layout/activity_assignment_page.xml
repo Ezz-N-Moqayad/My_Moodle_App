@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navBottom.homeScreen.course.add.AddFile">
+    tools:context=".navBottom.homeScreen.course.AssignmentPage">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/File_toolbar"
+        android:id="@+id/Assignment_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -18,17 +18,17 @@
         app:titleTextColor="@android:color/white">
 
         <ImageView
-            android:id="@+id/backPageCourseFile"
+            android:id="@+id/backPageCourseAss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             app:srcCompat="@drawable/ic_arrow_back" />
 
         <TextView
-            android:id="@+id/textView4File"
+            android:id="@+id/textView4Ass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add File"
+            android:text="Assignment"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -36,50 +36,60 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nameAssignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
-        android:text="Add File"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/addNameFile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/File_toolbar" />
-
-    <EditText
-        android:id="@+id/addNameFile"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/back"
-        android:hint="File Name"
-        android:inputType="text"
-        android:paddingStart="10dp"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10dp"
+        android:text="Name Assignment"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/uploadFileBtn"
-        app:layout_constraintEnd_toStartOf="@+id/pickFileFab"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Assignment_toolbar" />
+
+    <TextView
+        android:id="@+id/numberAssignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10dp"
+        android:text="Number Assignment"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toEndOf="@+id/nameAssignment"
+        app:layout_constraintTop_toBottomOf="@+id/Assignment_toolbar" />
+
+    <TextView
+        android:id="@+id/requiredAssignment"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="35dp"
+        android:gravity="center_vertical"
+        android:lines="10"
+        android:minHeight="48dp"
+        android:text="Required Assignment"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameAssignment" />
 
     <Button
-        android:id="@+id/uploadFileBtn"
+        android:id="@+id/uploadDeliveryAssBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="ADD File"
+        android:text="ADD Delivery"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addNameFile" />
+        app:layout_constraintTop_toBottomOf="@+id/requiredAssignment" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pickFileFab"
+        android:id="@+id/pickDeliveryAssFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -87,6 +97,7 @@
         android:layout_marginBottom="50dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toTopOf="@+id/uploadFileBtn"
+        app:layout_constraintBottom_toTopOf="@+id/uploadDeliveryAssBtn"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
