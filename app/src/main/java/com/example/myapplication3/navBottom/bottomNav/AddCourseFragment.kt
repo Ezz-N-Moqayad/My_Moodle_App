@@ -116,7 +116,7 @@ class AddCourseFragment : Fragment() {
                             builder.create().show()
                         }
                     }
-                }, 1000)
+                }, 500)
             }
         }
         return view

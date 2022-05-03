@@ -113,7 +113,7 @@ class AddAssignment : AppCompatActivity() {
                             builder.create().show()
                         }
                     }
-                }, 1000)
+                }, 500)
             }
         }
     }

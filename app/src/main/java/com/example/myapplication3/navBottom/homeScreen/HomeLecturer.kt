@@ -26,9 +26,8 @@ class HomeLecturer : Fragment() {
     private lateinit var rvCourseLecturer: RecyclerView
 
     lateinit var auth: FirebaseAuth
-    lateinit var database: DatabaseReference;
-    private var adapter: FirebaseRecyclerAdapter<Course, ViewHolder.CourseViewHolder>? = null
-
+    lateinit var database: DatabaseReference
+    lateinit var adapter: FirebaseRecyclerAdapter<Course, ViewHolder.CourseViewHolder>
     private val delayMillis: Long = 500
 
     override fun onCreateView(
@@ -98,14 +97,14 @@ class HomeLecturer : Fragment() {
     override fun onStart() {
         super.onStart()
         Handler().postDelayed({
-            adapter!!.startListening()
+            adapter.startListening()
         }, delayMillis)
     }
 
     override fun onStop() {
         super.onStop()
         Handler().postDelayed({
-            adapter!!.stopListening()
+            adapter.stopListening()
         }, delayMillis)
     }
 }

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/titleScreen3"
         android:name="com.example.myapplication3.navBottom.profilePage.Profile"
-        android:label="@string/title_home"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
 </navigation>

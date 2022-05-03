@@ -102,7 +102,7 @@ class AddFile : AppCompatActivity() {
                                 builder.create().show()
                             }
                         }
-                    }, 1000)
+                    }, 500)
                 }
             }
         }
