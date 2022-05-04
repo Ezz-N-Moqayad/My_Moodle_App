@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    app:startDestination="@+id/leaderboard">
+    app:startDestination="@+id/search">
+
     <fragment
-        android:id="@+id/leaderboard"
-        android:name="com.example.myapplication3.navBottom.listscreen.SearchCourseFragment"
-        android:label="@string/title_list"
-        tools:layout="@layout/fragment_search_course">
-    </fragment>
+        android:id="@+id/search"
+        android:name="com.example.myapplication3.navBottom.searchScreen.SearchCourseFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search_course" />
+
 </navigation>

@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home3"
     app:startDestination="@+id/titleScreen3">
-
     <fragment
         android:id="@+id/titleScreen3"
         android:name="com.example.myapplication3.navBottom.profilePage.Profile"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
-
 </navigation>
