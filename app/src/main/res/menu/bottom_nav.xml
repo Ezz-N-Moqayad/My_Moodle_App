@@ -12,17 +12,17 @@
         android:title="@string/title_search" />
     <item
         android:id="@+id/home2"
-        android:contentDescription="@string/cd_home"
-        android:icon="@drawable/ic_home"
-        android:title="Home2" />
+        android:contentDescription="Messenger"
+        android:icon="@drawable/ic_messenger"
+        android:title="Messenger" />
     <item
         android:id="@+id/form"
-        android:contentDescription="@string/cd_form"
-        android:icon="@drawable/ic_feedback"
-        android:title="@string/title_register" />
+        android:contentDescription="Setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting" />
     <item
         android:id="@+id/home3"
-        android:contentDescription="@string/cd_home"
+        android:contentDescription="Profile"
         android:icon="@drawable/ic_account_circle"
         android:title="Profile" />
 </menu>

@@ -111,6 +111,7 @@ class AddCourseFragment : Fragment() {
                             }
                             builder.setNegativeButton("No") { d, _ ->
                                 d.dismiss()
+                                Toast.makeText(context, "Add Failed", Toast.LENGTH_SHORT).show()
                                 findNavController().navigate(R.id.action_add_to_home)
                             }
                             builder.create().show()

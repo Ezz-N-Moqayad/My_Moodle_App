@@ -10,5 +10,4 @@
         android:name="com.example.myapplication3.navBottom.searchScreen.SearchCourseFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search_course" />
-
 </navigation>

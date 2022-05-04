@@ -10,5 +10,4 @@
         android:name="com.example.myapplication3.navBottom.homeScreen.HomeLecturer"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home_lecturer" />
-
 </navigation>
