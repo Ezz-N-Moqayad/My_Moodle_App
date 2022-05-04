@@ -1,11 +1,18 @@
 package com.example.myapplication3.navBottom.homeScreen.course
 
+import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication3.R
@@ -23,6 +30,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.io.FileOutputStream
 
 class CoursePage : AppCompatActivity() {
 
@@ -37,11 +46,10 @@ class CoursePage : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
     lateinit var database: DatabaseReference
-    private var adapterFile: FirebaseRecyclerAdapter<FileCourse, ViewHolder.FileViewHolder>? = null
-    private var adapterAss: FirebaseRecyclerAdapter<AssignmentCourse, ViewHolder.AssignmentViewHolder>? =
-        null
-    private var adapterVideo: FirebaseRecyclerAdapter<VideoCourse, ViewHolder.VideoViewHolder>? =
-        null
+    lateinit var progressDialog: ProgressDialog
+    lateinit var adapterFile: FirebaseRecyclerAdapter<FileCourse, ViewHolder.FileViewHolder>
+    lateinit var adapterAss: FirebaseRecyclerAdapter<AssignmentCourse, ViewHolder.AssignmentViewHolder>
+    lateinit var adapterVideo: FirebaseRecyclerAdapter<VideoCourse, ViewHolder.VideoViewHolder>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,13 +129,10 @@ class CoursePage : AppCompatActivity() {
 
         val idCourse = intent.getStringExtra("id_Course").toString()
         val idLecturer = intent.getStringExtra("id_Lecturer").toString()
-
         val query = database.child("Lecturer/$idLecturer/Courses/$idCourse/File")
-
         val options =
             FirebaseRecyclerOptions.Builder<FileCourse>().setQuery(query, FileCourse::class.java)
                 .build()
-
         adapterFile =
             object : FirebaseRecyclerAdapter<FileCourse, ViewHolder.FileViewHolder>(options) {
                 override fun onCreateViewHolder(
@@ -145,58 +150,120 @@ class CoursePage : AppCompatActivity() {
                     model: FileCourse
                 ) {
                     holder.file_course_name.text = model.Name_File
+                    holder.file_course_layout.setOnClickListener {
+                        if (ContextCompat.checkSelfPermission(
+                                this@CoursePage, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            downloadFile(model.Name_File, model.Uri_File)
+                            Log.d("ezz", "onCreate: STORAGE PERMISSION is already granted")
+                        } else {
+                            Log.d(
+                                "ezz",
+                                "onCreate: STORAGE PERMISSION was not granted, LETS request it"
+                            )
+                            val requestStoragePermissionLauncher =
+                                registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                                    if (isGranted) {
+                                        downloadFile(model.Name_File, model.Uri_File)
+                                        Log.d(
+                                            "ezz",
+                                            "onCreate: STORAGE PERMISSION is already granted"
+                                        )
+                                    } else {
+                                        Log.d("ezz", "onCreate: STORAGE PERMISSION is denied")
+                                        Toast.makeText(
+                                            this@CoursePage,
+                                            "PERMISSION denied",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            requestStoragePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        }
+                    }
                 }
             }
         rvFile.layoutManager = LinearLayoutManager(this)
         rvFile.adapter = adapterFile
     }
 
+    object Constants {
+        const val MAX_BYTES_PDF: Long = 50000000//50MB
+    }
+
+    private fun downloadFile(FileName: String, FileUrl: String) {
+        showDialog()
+        val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(FileUrl)
+        storageReference.getBytes(Constants.MAX_BYTES_PDF).addOnSuccessListener { bytes ->
+            Log.d("ezz", " downloadFile: File downloaded. ..")
+            saveToDownloadsFolder(bytes, FileName)
+        }.addOnFailureListener { e ->
+            hideDialog()
+            Log.d("ezz", "downloadFile: Failed to download File due to ${e.message}")
+            Toast.makeText(this, "Failed to download book due to ${e.message}", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun saveToDownloadsFolder(bytes: ByteArray?, FileName: String) {
+        Log.d("ezz", "saveToDownloadsFolder: saving download file")
+        try {
+            val downloadsFolder =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            downloadsFolder.mkdirs()
+            val filePath = downloadsFolder.path + "/" + "$FileName.pdf"
+
+            val out = FileOutputStream(filePath)
+            out.write(bytes)
+            out.close()
+            Toast.makeText(this, "Saved to Downloads Folder", Toast.LENGTH_SHORT).show()
+            hideDialog()
+        } catch (e: Exception) {
+            hideDialog()
+            Log.d("ezz", "saveToDownloadsFolder: failed to save due to ${e.message}")
+            Toast.makeText(this, "Failed to save due to ${e.message}", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
     private fun getAllAssignment() {
         rvAss = findViewById(R.id.rvAss)
-
         val idCourse = intent.getStringExtra("id_Course").toString()
         val idLecturer = intent.getStringExtra("id_Lecturer").toString()
-
         val query = database.child("Lecturer/$idLecturer/Courses/$idCourse/Assignment")
+        val options = FirebaseRecyclerOptions.Builder<AssignmentCourse>()
+            .setQuery(query, AssignmentCourse::class.java).build()
+        adapterAss = object :
+            FirebaseRecyclerAdapter<AssignmentCourse, ViewHolder.AssignmentViewHolder>(
+                options
+            ) {
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): ViewHolder.AssignmentViewHolder {
+                val view = LayoutInflater.from(this@CoursePage)
+                    .inflate(R.layout.assignment_course_item, parent, false)
+                return ViewHolder.AssignmentViewHolder(view)
+            }
 
-        val options =
-            FirebaseRecyclerOptions.Builder<AssignmentCourse>()
-                .setQuery(query, AssignmentCourse::class.java)
-                .build()
-
-        adapterAss =
-            object :
-                FirebaseRecyclerAdapter<AssignmentCourse, ViewHolder.AssignmentViewHolder>(options) {
-                override fun onCreateViewHolder(
-                    parent: ViewGroup,
-                    viewType: Int
-                ): ViewHolder.AssignmentViewHolder {
-                    val view = LayoutInflater.from(this@CoursePage)
-                        .inflate(R.layout.assignment_course_item, parent, false)
-                    return ViewHolder.AssignmentViewHolder(view)
-                }
-
-                override fun onBindViewHolder(
-                    holder: ViewHolder.AssignmentViewHolder,
-                    position: Int,
-                    model: AssignmentCourse
-                ) {
-                    holder.assignment_course_name.text = model.Name_Assignment
-                    holder.assignment_course_number.text = model.Number_Assignment
-                    holder.assignment_course_layout.setOnClickListener {
-                        intentAss(
-                            idLecturer,
-                            model.id_Assignment,
-                            model.Name_Assignment,
-                            model.Number_Assignment,
-                            model.Required_Assignment,
-                            model.Name_Course,
-                            model.Number_Course,
-                            model.Lecturer
-                        )
-                    }
+            override fun onBindViewHolder(
+                holder: ViewHolder.AssignmentViewHolder,
+                position: Int,
+                model: AssignmentCourse
+            ) {
+                holder.assignment_course_name.text = model.Name_Assignment
+                holder.assignment_course_number.text = model.Number_Assignment
+                holder.assignment_course_layout.setOnClickListener {
+                    intentAss(
+                        model.id_Assignment,
+                        model.Name_Assignment,
+                        model.Number_Assignment,
+                        model.Required_Assignment
+                    )
                 }
             }
+        }
         rvAss.layoutManager = LinearLayoutManager(this)
         rvAss.adapter = adapterAss
     }
@@ -205,80 +272,110 @@ class CoursePage : AppCompatActivity() {
         rvVideo = findViewById(R.id.rvVideo)
         val idCourse = intent.getStringExtra("id_Course").toString()
         val idLecturer = intent.getStringExtra("id_Lecturer").toString()
-
         val query = database.child("Lecturer/$idLecturer/Courses/$idCourse/Video")
-
         val options =
-            FirebaseRecyclerOptions.Builder<VideoCourse>().setQuery(query, VideoCourse::class.java)
+            FirebaseRecyclerOptions.Builder<VideoCourse>()
+                .setQuery(query, VideoCourse::class.java)
                 .build()
+        adapterVideo = object :
+            FirebaseRecyclerAdapter<VideoCourse, ViewHolder.VideoViewHolder>(options) {
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): ViewHolder.VideoViewHolder {
+                val view = LayoutInflater.from(this@CoursePage)
+                    .inflate(R.layout.video_course_item, parent, false)
+                return ViewHolder.VideoViewHolder(view)
+            }
 
-        adapterVideo =
-            object : FirebaseRecyclerAdapter<VideoCourse, ViewHolder.VideoViewHolder>(options) {
-                override fun onCreateViewHolder(
-                    parent: ViewGroup,
-                    viewType: Int
-                ): ViewHolder.VideoViewHolder {
-                    val view = LayoutInflater.from(this@CoursePage)
-                        .inflate(R.layout.video_course_item, parent, false)
-                    return ViewHolder.VideoViewHolder(view)
-                }
-
-                override fun onBindViewHolder(
-                    holder: ViewHolder.VideoViewHolder,
-                    position: Int,
-                    model: VideoCourse
-                ) {
-                    holder.video_course_name.text = model.Name_Video
-
+            override fun onBindViewHolder(
+                holder: ViewHolder.VideoViewHolder,
+                position: Int,
+                model: VideoCourse
+            ) {
+                holder.video_course_name.text = model.Name_Video
+                holder.video_course_layout.setOnClickListener {
+                    intentVideo(
+                        model.id_Video,
+                        model.Name_Video,
+                        model.Uri_Video
+                    )
                 }
             }
+        }
         rvVideo.layoutManager = LinearLayoutManager(this)
         rvVideo.adapter = adapterVideo
     }
 
     fun intentAss(
-        id_Lecturer: String,
         id_Assignment: String,
         Name_Assignment: String,
         Number_Assignment: String,
-        Required_Assignment: String,
-        Name_Course: String,
-        Number_Course: String,
-        Lecturer: String
+        Required_Assignment: String
     ) {
         val i = Intent(this, AssignmentPage::class.java)
-        i.putExtra("id_Lecturer", id_Lecturer)
         i.putExtra("id_Assignment", id_Assignment)
         i.putExtra("Name_Assignment", Name_Assignment)
         i.putExtra("Number_Assignment", Number_Assignment)
         i.putExtra("Required_Assignment", Required_Assignment)
+        i.putExtra("id_Lecturer", intent.getStringExtra("id_Lecturer").toString())
+        i.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())
         i.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
-        i.putExtra("Name_Course", Name_Course)
-        i.putExtra("Number_Course", Number_Course)
-        i.putExtra("Lecturer", Lecturer)
+        i.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
+        i.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
+        startActivity(i)
+    }
+
+    fun intentVideo(
+        id_Video: String,
+        Name_Video: String,
+        Uri_Video: String
+    ) {
+        val i = Intent(this, VideoActivity::class.java)
+        i.putExtra("id_Video", id_Video)
+        i.putExtra("Name_Video", Name_Video)
+        i.putExtra("Uri_Video", Uri_Video)
+        i.putExtra("id_Lecturer", intent.getStringExtra("id_Lecturer").toString())
+        i.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())
+        i.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
+        i.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
+        i.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
         startActivity(i)
     }
 
     fun intent(Intent_Page: Intent) {
         Intent_Page.putExtra("id_Course", intent.getStringExtra("id_Course").toString())
+        Intent_Page.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())
         Intent_Page.putExtra("id_Lecturer", intent.getStringExtra("id_Lecturer").toString())
         Intent_Page.putExtra("Name_Course", intent.getStringExtra("Name_Course").toString())
         Intent_Page.putExtra("Number_Course", intent.getStringExtra("Number_Course").toString())
-        Intent_Page.putExtra("Lecturer", intent.getStringExtra("Lecturer").toString())
         startActivity(Intent_Page)
+    }
+
+    private fun showDialog() {
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Please wait")
+        progressDialog.setMessage("Downloading File...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+    }
+
+    private fun hideDialog() {
+        if (progressDialog.isShowing)
+            progressDialog.dismiss()
     }
 
     override fun onStart() {
         super.onStart()
-        adapterFile!!.startListening()
-        adapterAss!!.startListening()
-        adapterVideo!!.startListening()
+        adapterFile.startListening()
+        adapterAss.startListening()
+        adapterVideo.startListening()
     }
 
     override fun onStop() {
         super.onStop()
-        adapterFile!!.stopListening()
-        adapterAss!!.stopListening()
-        adapterVideo!!.stopListening()
+        adapterFile.stopListening()
+        adapterAss.stopListening()
+        adapterVideo.stopListening()
     }
 }

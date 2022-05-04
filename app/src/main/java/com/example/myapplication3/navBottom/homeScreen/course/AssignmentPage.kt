@@ -111,7 +111,6 @@ class AssignmentPage : AppCompatActivity() {
         }
     }
 
-
     private fun uploadDeliveryFirebase(idLecturer: String) {
         showDialog()
         val idDelivery = System.currentTimeMillis()

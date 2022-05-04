@@ -5,7 +5,6 @@ class AssignmentCourse(
     var Name_Assignment: String = "",
     var Number_Assignment: String = "",
     var Required_Assignment: String = "",
-    var Name_Course: String = "",
     var Number_Course: String = "",
-    var Lecturer: String = ""
+    var idLecturer: String = ""
 )

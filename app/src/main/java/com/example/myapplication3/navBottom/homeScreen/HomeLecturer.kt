@@ -28,7 +28,7 @@ class HomeLecturer : Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var database: DatabaseReference
     lateinit var adapter: FirebaseRecyclerAdapter<Course, ViewHolder.CourseViewHolder>
-    private val delayMillis: Long = 500
+    private val delayMillis: Long = 1000
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -82,10 +82,10 @@ class HomeLecturer : Fragment() {
                 holder.course_layout.setOnClickListener {
                     val i = Intent(context, CoursePage::class.java)
                     i.putExtra("id_Lecturer", idLecturer)
+                    i.putExtra("Lecturer", model.Lecturer)
                     i.putExtra("id_Course", model.id_Course)
                     i.putExtra("Name_Course", model.Name_Course)
                     i.putExtra("Number_Course", model.Number_Course)
-                    i.putExtra("Lecturer", model.Lecturer)
                     startActivity(i)
                 }
             }

@@ -4,8 +4,6 @@ class FileCourse(
     var id_File: String = "",
     var Name_File: String = "",
     var Uri_File: String = "",
-    var Name_Course: String = "",
     var Number_Course: String = "",
-    var Lecturer: String = ""
+    var idLecturer: String = ""
 )
-

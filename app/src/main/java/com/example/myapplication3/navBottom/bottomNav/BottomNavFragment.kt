@@ -108,10 +108,10 @@ class BottomNavFragment : Fragment() {
                     }
                     true
                 }
-                R.id.searchCourse -> {
-                    findNavController().navigate(R.id.searchCourse)
-                    true
-                }
+//                R.id.searchCourse -> {
+//                    findNavController().navigate(R.id.searchCourse)
+//                    true
+//                }
                 else -> false
             }
         }
