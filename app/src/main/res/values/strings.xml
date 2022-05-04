@@ -31,11 +31,11 @@
     <string name="title_list">Leaderboard</string>
     <string name="title_detail">Profile</string>
     <string name="title_adds">Add Course</string>
-    <string name="title_search">Search Course</string>
+    <string name="title_search">Search</string>
     <string name="cd_home">Home</string>
     <string name="cd_list">List</string>
     <string name="cd_form">Form</string>
-    <string name="cd_search">Search Course</string>
+    <string name="cd_search">Search</string>
     <string name="cd_adds">Add Course</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>

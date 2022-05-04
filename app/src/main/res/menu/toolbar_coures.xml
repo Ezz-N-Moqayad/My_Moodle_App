@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/addsFile"
+        android:contentDescription="Add File"
+        android:icon="@drawable/ic_add"
+        android:title="Add File" />
+
+    <item
+        android:id="@+id/addsAssignment"
+        android:contentDescription="Add Assignment"
+        android:icon="@drawable/ic_add"
+        android:title="Add Assignment" />
+
+    <item
+        android:id="@+id/addsVideo"
+        android:contentDescription="Add Video"
+        android:icon="@drawable/ic_add"
+        android:title="Add Video" />
+
+</menu>

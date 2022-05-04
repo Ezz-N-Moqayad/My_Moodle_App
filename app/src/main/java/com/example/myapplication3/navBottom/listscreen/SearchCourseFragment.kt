@@ -1,14 +1,18 @@
-package com.example.myapplication3.navBottom.bottomNav
+package com.example.myapplication3.navBottom.listscreen
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,11 +96,5 @@ class SearchCourseFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         adapter.stopListening()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<Toolbar>(R.id.search_toolbar)
-        NavigationUI.setupWithNavController(toolbar, findNavController())
     }
 }
