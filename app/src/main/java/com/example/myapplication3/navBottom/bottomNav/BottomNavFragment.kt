@@ -77,11 +77,11 @@ class BottomNavFragment : Fragment() {
             intent = requireActivity().intent
         )
 
-        controller.observe(viewLifecycleOwner, { navController ->
+        controller.observe(viewLifecycleOwner) { navController ->
             NavigationUI.setupWithNavController(toolbar, navController)
             bottomNavSelectedItemId =
                 navController.graph.id
-        })
+        }
     }
 
     private fun addToolbarListener(toolbar: Toolbar) {
