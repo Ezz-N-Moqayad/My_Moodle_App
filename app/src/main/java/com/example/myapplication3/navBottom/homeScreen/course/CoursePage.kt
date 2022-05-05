@@ -1,12 +1,14 @@
 package com.example.myapplication3.navBottom.homeScreen.course
 
 import android.Manifest
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -67,6 +69,7 @@ class CoursePage : AppCompatActivity() {
         nameCourseCou.text = intent.getStringExtra("Name_Course").toString()
         numberCourseCou.text = intent.getStringExtra("Number_Course").toString()
         lecturerCou.text = intent.getStringExtra("Lecturer").toString()
+        val idCourse = intent.getStringExtra("id_Course").toString()
 
         getAllFile()
         getAllAssignment()
@@ -76,6 +79,32 @@ class CoursePage : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
+        var idLecturer = ""
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("id_Lecturer").value.toString() ==
+                    intent.getStringExtra("id_Lecturer").toString()
+                ) {
+                    idLecturer = document.child("id_Lecturer").value.toString()
+                }
+            }
+        }
+        var idStudent = ""
+        database.child("Student").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                val idStudent2 = document.child("id_Student").value.toString()
+                database.child("Student/$idStudent2/Courses").get()
+                    .addOnSuccessListener { dataSnapshot2 ->
+                        for (document2 in dataSnapshot2.children) {
+                            if (document2.child("id_Course").value.toString() ==
+                                intent.getStringExtra("id_Course").toString()
+                            ) {
+                                idStudent = document.child("id_Student").value.toString()
+                            }
+                        }
+                    }
+            }
+        }
         btnPopup.setOnClickListener {
             database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
                 for (document in dataSnapshot.children) {
@@ -89,6 +118,7 @@ class CoursePage : AppCompatActivity() {
                                     Intent(this, AddAssignment::class.java)
                                 )
                                 R.id.addsVideo -> intent(Intent(this, AddVideo::class.java))
+                                R.id.deleteCourse -> deleteCourse(idCourse, idLecturer, idStudent)
                             }
                             true
                         }
@@ -107,6 +137,23 @@ class CoursePage : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun deleteCourse(idCourse: String, idLecturer: String, idStudent: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Delete Course")
+        builder.setMessage("Do you want to Delete the Course?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            database.child("Lecturer/$idLecturer/Courses/$idCourse").removeValue()
+            database.child("Student/$idStudent/Courses/$idCourse").removeValue()
+            database.child("Courses/$idCourse").removeValue()
+
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+        builder.setNegativeButton("No") { d, _ ->
+            d.dismiss()
+        }
+        builder.create().show()
     }
 
     private fun getAllFile() {

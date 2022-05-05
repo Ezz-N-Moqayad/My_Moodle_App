@@ -68,7 +68,7 @@
                 android:id="@+id/btnAddCourse"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/back1"
                 android:contentDescription="@string/action_sign_in"
                 app:srcCompat="@drawable/ic_add" />
         </LinearLayout>

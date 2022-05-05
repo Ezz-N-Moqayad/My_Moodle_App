@@ -18,5 +18,10 @@
         android:contentDescription="Add Video"
         android:icon="@drawable/ic_add"
         android:title="Add Video" />
+    <item
+        android:id="@+id/deleteCourse"
+        android:contentDescription="Delete Course"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete Course" />
 
 </menu>

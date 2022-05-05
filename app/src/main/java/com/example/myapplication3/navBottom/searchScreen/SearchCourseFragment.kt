@@ -211,5 +211,29 @@ class SearchCourseFragment : Fragment() {
             "id_Lecturer" to id_Lecturer
         )
         database.child("Student/$idStudent/Courses/$id_Course").setValue(course)
+        var student: HashMap<String, String> = hashMapOf(
+            "id_Student" to idStudent
+        )
+        database.child("Student").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    student = hashMapOf(
+                        "id_Student" to document.child("id_Student").value.toString(),
+                        "First_Name" to document.child("First_Name").value.toString(),
+                        "Middle_Name" to document.child("Middle_Name").value.toString(),
+                        "Family_Name" to document.child("Family_Name").value.toString(),
+                        "Birth_Date" to document.child("Birth_Date").value.toString(),
+                        "Address" to document.child("Address").value.toString(),
+                        "Email" to document.child("Email").value.toString(),
+                        "Mobile" to document.child("Mobile").value.toString()
+                    )
+                }
+            }
+        }
+        Handler().postDelayed({
+            database.child("Lecturer/$id_Lecturer/Courses/$id_Course/Student/$idStudent")
+                .setValue(student)
+            database.child("Courses/$id_Course/Student/$idStudent").setValue(student)
+        }, 1000)
     }
 }
