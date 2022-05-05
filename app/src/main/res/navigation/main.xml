@@ -14,12 +14,12 @@ all your sub graphs need their own files-->
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
-            app:uri="www.example.com/user/{userName}" />
+            app:uri="www.example.com/user/{userName}"
+            tools:ignore="UnusedAttribute" />
         <argument
             android:name="userName"
             app:argType="string" />
     </fragment>
-
     <fragment
         android:id="@+id/addsCourse"
         android:name="com.example.myapplication3.navBottom.bottomNav.AddCourseFragment"

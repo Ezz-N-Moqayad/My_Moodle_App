@@ -154,17 +154,18 @@ class AddVideo : AppCompatActivity() {
         Name_Video: String,
         Uri_Video: String,
         Number_Course: String,
-        idLecturer: String
+        id_Lecturer: String
     ) {
         val video = hashMapOf(
             "id_Video" to id_Video,
             "Name_Video" to Name_Video,
             "Uri_Video" to Uri_Video,
             "Number_Course" to Number_Course,
-            "idLecturer" to idLecturer
+            "id_Lecturer" to id_Lecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
-        database.child("Lecturer/$idLecturer/Courses/$idCourse/Video/$id_Video").setValue(video)
+        database.child("Courses/$idCourse/Video/$id_Video").setValue(video)
+        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/Video/$id_Video").setValue(video)
     }
 
     private fun videoPickDialog() {

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,26 +49,39 @@ class HomeLecturer : Fragment() {
                 }
             }
         }
+        var idStudent = ""
+        database.child("Student").get().addOnSuccessListener { dataSnapshot ->
+            for (document in dataSnapshot.children) {
+                if (document.child("Email").value.toString() == auth.currentUser!!.email) {
+                    idStudent = document.child("id_Student").value.toString()
+                }
+            }
+        }
         Handler().postDelayed({
-            getAllCourses(rvCourseLecturer, idLecturer)
+            getAllCourses(rvCourseLecturer, idLecturer, idStudent)
         }, delayMillis)
-
         return view
     }
 
-    private fun getAllCourses(rvCourseLecturer: RecyclerView, idLecturer: String) {
-
-        val query = database.child("Lecturer/$idLecturer/Courses")
-        val options =
+    private fun getAllCourses(
+        rvCourseLecturer: RecyclerView,
+        idLecturer: String,
+        idStudent: String
+    ) {
+        val options: FirebaseRecyclerOptions<Course> = if (idLecturer.isEmpty()) {
+            val query = database.child("Student/$idStudent/Courses")
             FirebaseRecyclerOptions.Builder<Course>().setQuery(query, Course::class.java).build()
+        } else {
+            val query = database.child("Lecturer/$idLecturer/Courses")
+            FirebaseRecyclerOptions.Builder<Course>().setQuery(query, Course::class.java).build()
+        }
         adapter = object :
             FirebaseRecyclerAdapter<Course, ViewHolder.CourseViewHolder>(options) {
             override fun onCreateViewHolder(
                 parent: ViewGroup,
                 viewType: Int
             ): ViewHolder.CourseViewHolder {
-                val root = LayoutInflater.from(context)
-                    .inflate(R.layout.course_item, parent, false)
+                val root = LayoutInflater.from(context).inflate(R.layout.course_item, parent, false)
                 return ViewHolder.CourseViewHolder(root)
             }
 
@@ -81,7 +95,8 @@ class HomeLecturer : Fragment() {
                 holder.course_number.text = model.Number_Course
                 holder.course_layout.setOnClickListener {
                     val i = Intent(context, CoursePage::class.java)
-                    i.putExtra("id_Lecturer", idLecturer)
+                    i.putExtra("id_Lecturer", model.id_Lecturer)
+                    i.putExtra("id_Student", idStudent)
                     i.putExtra("Lecturer", model.Lecturer)
                     i.putExtra("id_Course", model.id_Course)
                     i.putExtra("Name_Course", model.Name_Course)

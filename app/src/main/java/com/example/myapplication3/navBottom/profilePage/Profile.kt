@@ -28,7 +28,7 @@ class Profile : Fragment() {
     private lateinit var et_emailPro: EditText
     private lateinit var et_mobilePro: EditText
     private lateinit var editPro: TextView
-    private lateinit var btn_loginOut: Button
+    private lateinit var btn_loginOut: ImageButton
     private var edo = 0
 
     lateinit var database: DatabaseReference

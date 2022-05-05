@@ -42,7 +42,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/addNumberCourse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/addNumberCourse"
@@ -70,5 +70,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addNumberCourse" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

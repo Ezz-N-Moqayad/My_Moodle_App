@@ -109,5 +109,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView2_2" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

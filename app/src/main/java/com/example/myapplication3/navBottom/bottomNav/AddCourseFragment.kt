@@ -57,7 +57,6 @@ class AddCourseFragment : Fragment() {
                 }
             }
         }
-
         addCourse.setOnClickListener {
             if (addNameCourse.text.isEmpty() || addNumberCourse.text.isEmpty()) {
                 Toast.makeText(context, "Fill Fields", Toast.LENGTH_SHORT).show()
@@ -68,7 +67,7 @@ class AddCourseFragment : Fragment() {
             } else {
                 var Name_Course = "null"
                 var Number_Course = "null"
-                database.child("Lecturer/$idLecturer/Courses").get()
+                database.child("Courses").get()
                     .addOnSuccessListener { dataSnapshot ->
                         for (document in dataSnapshot.children) {
                             if (document.child("Name_Course").value.toString() == addNameCourse.text.toString()) {
@@ -128,15 +127,16 @@ class AddCourseFragment : Fragment() {
         Name_Course: String,
         Number_Course: String,
         Lecturer: String,
-        idLecturer: String
+        id_Lecturer: String
     ) {
         val course = hashMapOf(
             "id_Course" to id_Course,
             "Name_Course" to Name_Course,
             "Number_Course" to Number_Course,
             "Lecturer" to Lecturer,
+            "id_Lecturer" to id_Lecturer
         )
-        database.child("Lecturer/$idLecturer/Courses/$id_Course").setValue(course)
+        database.child("Lecturer/$id_Lecturer/Courses/$id_Course").setValue(course)
         database.child("Courses/$id_Course").setValue(course)
     }
 

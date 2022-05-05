@@ -124,7 +124,7 @@ class AddAssignment : AppCompatActivity() {
         Number_Assignment: String,
         Required_Assignment: String,
         Number_Course: String,
-        idLecturer: String
+        id_Lecturer: String
     ) {
         val assignment = hashMapOf(
             "id_Assignment" to id_Assignment,
@@ -132,10 +132,11 @@ class AddAssignment : AppCompatActivity() {
             "Number_Assignment" to Number_Assignment,
             "Required_Assignment" to Required_Assignment,
             "Number_Course" to Number_Course,
-            "idLecturer" to idLecturer
+            "id_Lecturer" to id_Lecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
-        database.child("Lecturer/$idLecturer/Courses/$idCourse/Assignment/$id_Assignment")
+        database.child("Courses/$idCourse/Assignment/$id_Assignment").setValue(assignment)
+        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/Assignment/$id_Assignment")
             .setValue(assignment)
     }
 

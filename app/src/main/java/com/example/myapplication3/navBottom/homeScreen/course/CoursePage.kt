@@ -73,22 +73,7 @@ class CoursePage : AppCompatActivity() {
         getAllVideo()
 
         backHome.setOnClickListener {
-            database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
-                for (document in dataSnapshot.children) {
-                    if (document.child("Email").value.toString() == auth.currentUser!!.email) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        Toast.makeText(this, "Lecturer", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            database.child("Student").get().addOnSuccessListener { dataSnapshot ->
-                for (document in dataSnapshot.children) {
-                    if (document.child("Email").value.toString() == auth.currentUser!!.email) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        Toast.makeText(this, "Student", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
         btnPopup.setOnClickListener {

@@ -144,17 +144,18 @@ class AddFile : AppCompatActivity() {
         Name_File: String,
         Uri_File: String,
         Number_Course: String,
-        idLecturer: String
+        id_Lecturer: String
     ) {
         val file = hashMapOf(
             "id_File" to id_File,
             "Name_File" to Name_File,
             "Uri_File" to Uri_File,
             "Number_Course" to Number_Course,
-            "idLecturer" to idLecturer
+            "id_Lecturer" to id_Lecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
-        database.child("Lecturer/$idLecturer/Courses/$idCourse/File/$id_File").setValue(file)
+        database.child("Courses/$idCourse/File/$id_File").setValue(file)
+        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/File/$id_File").setValue(file)
     }
 
     private fun pdfPickIntent() {

@@ -9,7 +9,6 @@
     tools:context=".navBottom.profilePage.Profile"
     tools:layout_editor_absoluteY="81dp">
 
-
     <TextView
         android:id="@+id/editPro"
         android:layout_width="wrap_content"
@@ -26,20 +25,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_loginOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:background="#187093"
+        android:contentDescription="@string/app_name"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         android:padding="5dp"
-        android:text="LogOut"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linear_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logout" />
 
     <LinearLayout
         android:id="@+id/linear_1"

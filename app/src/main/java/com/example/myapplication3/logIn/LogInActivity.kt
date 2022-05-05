@@ -53,22 +53,7 @@ class LogInActivity : AppCompatActivity() {
     private fun logInAccount(email: String, passWord: String) {
         auth.signInWithEmailAndPassword(email, passWord).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
-                    for (document in dataSnapshot.children) {
-                        if (document.child("Email").value.toString() == auth.currentUser!!.email) {
-                            startActivity(Intent(this, MainActivity::class.java))
-                            Toast.makeText(this, "Lecturer", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-                database.child("Student").get().addOnSuccessListener { dataSnapshot ->
-                    for (document in dataSnapshot.children) {
-                        if (document.child("Email").value.toString() == auth.currentUser!!.email) {
-                            startActivity(Intent(this, MainActivity::class.java))
-                            Toast.makeText(this, "Student", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+                startActivity(Intent(this, MainActivity::class.java))
                 hideDialog()
             } else {
                 Toast.makeText(this, "Failed to register", Toast.LENGTH_SHORT).show()

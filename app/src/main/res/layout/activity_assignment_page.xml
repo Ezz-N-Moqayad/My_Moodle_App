@@ -32,7 +32,6 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
-
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
@@ -99,5 +98,4 @@
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toTopOf="@+id/uploadDeliveryAssBtn"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
