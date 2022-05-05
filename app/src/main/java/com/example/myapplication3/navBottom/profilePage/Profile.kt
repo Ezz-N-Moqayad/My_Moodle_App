@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,7 +71,7 @@ class Profile : Fragment() {
         }
         btn_loginOut.setOnClickListener {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("LogOut")
+            builder.setTitle("Logout")
             builder.setMessage("Do you want to Logout?")
             builder.setPositiveButton("Yes") { _, _ ->
                 startActivity(Intent(context, LogInActivity::class.java))
@@ -79,6 +80,17 @@ class Profile : Fragment() {
                 d.dismiss()
             }
             builder.create().show()
+        }
+
+        var lec = ""
+        database.child("Lecturer").get().addOnSuccessListener { dataSnapshot2 ->
+            for (document2 in dataSnapshot2.children) {
+                if (document2.child("Email").value.toString() == auth.currentUser!!.email) {
+                    lec = "${document2.child("First_Name").value.toString()} ${
+                        document2.child("Middle_Name").value.toString()
+                    } ${document2.child("Family_Name").value.toString()}"
+                }
+            }
         }
 
         disableEdit()
@@ -109,7 +121,7 @@ class Profile : Fragment() {
                         0
                     )
                     disableEdit()
-                    editUser()
+                    editUser(lec)
                 }
             }
         }
@@ -145,7 +157,7 @@ class Profile : Fragment() {
         }
     }
 
-    private fun editUser() {
+    private fun editUser(lec: String) {
         database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
             for (document in dataSnapshot.children) {
                 if (document.child("Email").value.toString() == auth.currentUser!!.email) {
@@ -158,7 +170,34 @@ class Profile : Fragment() {
                         "Mobile" to et_mobilePro.text.toString()
                     )
                     val idLecturer = document.child("id_Lecturer").value.toString()
-                    database.child("Lecturer").child(idLecturer).updateChildren(lecturer)
+                    database.child("Lecturer/$idLecturer").updateChildren(lecturer)
+
+                    val lecturerName = "${et_fNamePro.text} ${et_mNamePro.text} ${et_lNamePro.text}"
+
+                    database.child("Courses").get().addOnSuccessListener { dataSnapshot2 ->
+                        for (document2 in dataSnapshot2.children) {
+                            if (document2.child("Lecturer").value.toString() == lec) {
+                                val idCourse = document2.child("id_Course").value.toString()
+                                val course = mapOf(
+                                    "Lecturer" to lecturerName
+                                )
+                                database.child("Courses/$idCourse").updateChildren(course)
+                            }
+                        }
+                    }
+                    database.child("Lecturer/$idLecturer/Courses").get()
+                        .addOnSuccessListener { dataSnapshot3 ->
+                            for (document3 in dataSnapshot3.children) {
+                                if (document3.child("Lecturer").value.toString() == lec) {
+                                    val idCourse = document3.child("id_Course").value.toString()
+                                    val course = mapOf(
+                                        "Lecturer" to lecturerName,
+                                    )
+                                    database.child("Lecturer/$idLecturer/Courses/$idCourse")
+                                        .updateChildren(course)
+                                }
+                            }
+                        }
                 }
             }
         }
@@ -176,31 +215,27 @@ class Profile : Fragment() {
                     val idStudent = document.child("id_Student").value.toString()
                     database.child("Student").child(idStudent).updateChildren(student)
                 }
+                val lecturerName = "${et_fNamePro.text} ${et_mNamePro.text} ${et_lNamePro.text}"
+
+                val idStudent = document.child("id_Student").value.toString()
+                Handler().postDelayed({
+                    database.child("Student/$idStudent/Courses").get()
+                        .addOnSuccessListener { dataSnapshot2 ->
+                            for (document2 in dataSnapshot2.children) {
+                                if (document2.child("Lecturer").value.toString() == lec) {
+                                    val idCourse = document2.child("id_Course").value.toString()
+                                    val course = mapOf(
+                                        "Lecturer" to lecturerName,
+                                    )
+                                    database.child("Student/$idStudent/Courses/$idCourse")
+                                        .updateChildren(course)
+                                }
+                            }
+                        }
+                }, 1000)
+
             }
         }
-//        db!!.collection("Courses").get()
-//            .addOnSuccessListener { querySnapshot1 ->
-//                for (document1 in querySnapshot1) {
-//                    db!!.collection("Lecturer").get()
-//                        .addOnSuccessListener { querySnapshot2 ->
-//                            for (document2 in querySnapshot2) {
-//                                if (document2.get("Email") == auth.currentUser!!.email) {
-//                                    if (document1.get("Lecturer") == "${
-//                                            document2.get("First_Name").toString()
-//                                        } ${
-//                                            document2.get("Middle_Name").toString()
-//                                        } ${document2.get("Family_Name").toString()}"
-//                                    ) {
-//                                        db!!.collection("Courses").document(document1.id).update(
-//                                            "Lecturer",
-//                                            "${et_fNamePro.text} ${et_mNamePro.text} ${et_lNamePro.text}"
-//                                        )
-//                                    }
-//                                }
-//                            }
-//                        }
-//                }
-//            }
     }
 
     private fun disableEdit() {

@@ -209,7 +209,6 @@ class SearchCourseFragment : Fragment() {
             "Number_Course" to Number_Course,
             "Lecturer" to Lecturer,
             "id_Lecturer" to id_Lecturer
-
         )
         database.child("Student/$idStudent/Courses/$id_Course").setValue(course)
     }

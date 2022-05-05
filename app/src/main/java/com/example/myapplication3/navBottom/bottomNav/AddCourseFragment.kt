@@ -53,7 +53,6 @@ class AddCourseFragment : Fragment() {
                         document.child("Middle_Name").value.toString()
                     } ${document.child("Family_Name").value.toString()}"
                     idLecturer = document.child("id_Lecturer").value.toString()
-
                 }
             }
         }
