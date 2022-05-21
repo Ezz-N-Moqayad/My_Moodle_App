@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.homeScreen.course.add
+package com.example.myapplication3.navBottom.homeScreen.course.edit
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.example.myapplication3.R
 import com.example.myapplication3.navBottom.homeScreen.course.CoursePageLecturer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,11 +23,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
-class AddVideo : AppCompatActivity() {
+class EditVideo : AppCompatActivity() {
 
-    private lateinit var addNameVideo: EditText
-    private lateinit var uploadVideoBtn: Button
-    private lateinit var pickVideoFab: FloatingActionButton
+    private lateinit var editNameVideo: EditText
+    private lateinit var editVideoBtn: Button
+    private lateinit var editVideoFab: FloatingActionButton
     private lateinit var backPageCourseVideo: ImageView
 
     lateinit var auth: FirebaseAuth
@@ -40,16 +41,19 @@ class AddVideo : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_video)
+        setContentView(R.layout.activity_edit_video)
 
-        addNameVideo = findViewById(R.id.addNameVideo)
-        uploadVideoBtn = findViewById(R.id.uploadVideoBtn)
-        pickVideoFab = findViewById(R.id.pickVideoFab)
+        editNameVideo = findViewById(R.id.editNameVideo)
+        editVideoBtn = findViewById(R.id.editVideoBtn)
+        editVideoFab = findViewById(R.id.editVideoFab)
         backPageCourseVideo = findViewById(R.id.backPageCourseVideo)
 
         auth = Firebase.auth
         database = Firebase.database.reference
         var idLecturer = ""
+
+        editNameVideo.setText(intent.getStringExtra("Name_Video").toString())
+        videoUri = intent.getStringExtra("Uri_Video")!!.toUri()
 
         database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
             for (document in dataSnapshot.children) {
@@ -68,10 +72,10 @@ class AddVideo : AppCompatActivity() {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
 
-        uploadVideoBtn.setOnClickListener {
+        editVideoBtn.setOnClickListener {
             val idCourse = intent.getStringExtra("id_Course").toString()
             when {
-                addNameVideo.text.isEmpty() -> {
+                editNameVideo.text.isEmpty() -> {
                     Toast.makeText(this, "Video Name is required", Toast.LENGTH_SHORT).show()
                 }
                 videoUri == null -> {
@@ -82,11 +86,11 @@ class AddVideo : AppCompatActivity() {
                     database.child("Lecturer/$idLecturer/Courses/$idCourse/Video").get()
                         .addOnSuccessListener { dataSnapshot ->
                             for (document in dataSnapshot.children) {
-                                if (document.child("Name_Video").value.toString() == addNameVideo.text.toString()) {
+                                if (document.child("Name_Video").value.toString() == editNameVideo.text.toString()) {
                                     nameVideo = "nameVideo"
                                     Toast.makeText(
                                         this,
-                                        "This ${addNameVideo.text} is already in use, try again",
+                                        "This ${editNameVideo.text} is already in use, try again",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -96,11 +100,18 @@ class AddVideo : AppCompatActivity() {
                         when (nameVideo) {
                             "nameVideo" -> {}
                             else -> {
+                                val idVideo = intent.getStringExtra("id_Video").toString()
                                 val builder = android.app.AlertDialog.Builder(this)
-                                builder.setTitle("Add Video")
-                                builder.setMessage("Do you want to Add the Video?")
+                                builder.setTitle("Edit Video")
+                                builder.setMessage("Do you want to Edit the Video?")
                                 builder.setPositiveButton("Yes") { _, _ ->
-                                    uploadVideoFirebase(idLecturer)
+                                    editVideo(
+                                        idVideo.toString(),
+                                        editNameVideo.text.toString(),
+                                        idLecturer
+                                    )
+                                    intent(Intent(this, CoursePageLecturer::class.java))
+                                    Toast.makeText(this, "Edit Successfully", Toast.LENGTH_SHORT).show()
                                 }
                                 builder.setNegativeButton("No") { d, _ ->
                                     d.dismiss()
@@ -113,7 +124,7 @@ class AddVideo : AppCompatActivity() {
                 }
             }
         }
-        pickVideoFab.setOnClickListener {
+        editVideoFab.setOnClickListener {
             videoPickDialog()
         }
     }
@@ -128,19 +139,11 @@ class AddVideo : AppCompatActivity() {
             while (!uriTask.isSuccessful);
             val downloadUri = uriTask.result
             if (uriTask.isSuccessful) {
-                addVideo(
-                    idVideo.toString(),
-                    addNameVideo.text.toString(),
-                    downloadUri.toString(),
-                    intent.getStringExtra("Number_Course").toString(),
-                    idLecturer
-                )
+                hideDialog()
+            } else {
                 hideDialog()
                 intent(Intent(this, CoursePageLecturer::class.java))
-                Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT).show()
-            } else {
-                intent(Intent(this, CoursePageLecturer::class.java))
-                Toast.makeText(this, "Add Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Edit Failed", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener { e ->
             hideDialog()
@@ -149,23 +152,18 @@ class AddVideo : AppCompatActivity() {
         }
     }
 
-    private fun addVideo(
+    private fun editVideo(
         id_Video: String,
         Name_Video: String,
-        Uri_Video: String,
-        Number_Course: String,
         id_Lecturer: String
     ) {
-        val video = hashMapOf(
-            "id_Video" to id_Video,
+        val video = mapOf(
             "Name_Video" to Name_Video,
-            "Uri_Video" to Uri_Video,
-            "Number_Course" to Number_Course,
-            "id_Lecturer" to id_Lecturer
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
-        database.child("Courses/$idCourse/Video/$id_Video").setValue(video)
-        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/Video/$id_Video").setValue(video)
+        database.child("Courses/$idCourse/Video/$id_Video").updateChildren(video)
+        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/Video/$id_Video")
+            .updateChildren(video)
     }
 
     private fun videoPickDialog() {

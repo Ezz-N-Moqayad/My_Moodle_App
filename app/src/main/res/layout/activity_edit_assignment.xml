@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navBottom.homeScreen.course.AssignmentPage">
+    tools:context=".navBottom.homeScreen.course.edit.EditAssignment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/Assignment_toolbar"
@@ -28,61 +28,67 @@
             android:id="@+id/textView4Ass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assignment"
+            android:text="Edit Assignment"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
-        android:id="@+id/nameAssignment"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25sp"
-        android:layout_marginTop="10dp"
-        android:text="Name Assignment"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintHorizontal_bias="0.172"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:text="Edit Assignment"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editNameAss"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Assignment_toolbar" />
 
-    <TextView
-        android:id="@+id/requiredAssignment"
+    <EditText
+        android:id="@+id/editNameAss"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/back"
+        android:hint="Assignment Name"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/editRequiredAss"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editRequiredAss"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25sp"
-        android:layout_marginTop="35dp"
-        android:gravity="center_vertical"
-        android:lines="10"
-        android:minHeight="48dp"
-        android:text="Required Assignment"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/back"
+        android:hint="Assignment Required"
+        android:lines="5"
+        android:paddingStart="10dp"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameAssignment" />
+        app:layout_constraintTop_toBottomOf="@+id/editNameAss"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/uploadDeliveryAssBtn"
+        android:id="@+id/editAss"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="ADD Delivery"
+        android:text="Edit Assignment"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requiredAssignment" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pickDeliveryAssFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="50dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toTopOf="@+id/uploadDeliveryAssBtn"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editRequiredAss" />
 </androidx.constraintlayout.widget.ConstraintLayout>

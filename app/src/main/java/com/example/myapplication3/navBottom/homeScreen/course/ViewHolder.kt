@@ -28,19 +28,32 @@ class ViewHolder {
     }
 
     class FileViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var file_course_name = view.findViewById<TextView>(R.id.file_course_name)!!
-        var file_course_layout = view.findViewById<LinearLayout>(R.id.file_course_layout)!!
+        var file_name = view.findViewById<TextView>(R.id.file_name)!!
     }
 
     class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var video_course_name = view.findViewById<TextView>(R.id.video_course_name)!!
-        var video_course_layout = view.findViewById<LinearLayout>(R.id.video_course_layout)!!
+        var video_name = view.findViewById<TextView>(R.id.video_name)!!
     }
 
     class AssignmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var assignment_course_name = view.findViewById<TextView>(R.id.assignment_course_name)!!
-        var assignment_course_number = view.findViewById<TextView>(R.id.assignment_course_number)!!
-        var assignment_course_layout =
-            view.findViewById<LinearLayout>(R.id.assignment_course_layout)!!
+        var assignment_name = view.findViewById<TextView>(R.id.assignment_name)!!
+    }
+
+    class FileViewHolderLecturer(view: View) : RecyclerView.ViewHolder(view) {
+        var file_name_lecturer = view.findViewById<TextView>(R.id.file_name_lecturer)!!
+        var edit_file = view.findViewById<ImageButton>(R.id.edit_file)!!
+        var delete_file = view.findViewById<ImageButton>(R.id.delete_file)!!
+    }
+
+    class VideoViewHolderLecturer(view: View) : RecyclerView.ViewHolder(view) {
+        var video_name_lecturer = view.findViewById<TextView>(R.id.video_name_lecturer)!!
+        var edit_video = view.findViewById<ImageButton>(R.id.edit_video)!!
+        var delete_video = view.findViewById<ImageButton>(R.id.delete_video)!!
+    }
+
+    class AssignmentViewHolderLecturer(view: View) : RecyclerView.ViewHolder(view) {
+        var assignment_name_lecturer = view.findViewById<TextView>(R.id.assignment_name_lecturer)!!
+        var edit_assignment = view.findViewById<ImageButton>(R.id.edit_assignment)!!
+        var delete_ass = view.findViewById<ImageButton>(R.id.delete_ass)!!
     }
 }

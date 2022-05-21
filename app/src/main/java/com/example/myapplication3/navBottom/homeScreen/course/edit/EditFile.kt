@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.homeScreen.course.add
+package com.example.myapplication3.navBottom.homeScreen.course.edit
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import com.example.myapplication3.R
 import com.example.myapplication3.navBottom.homeScreen.course.CoursePageLecturer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,12 +22,12 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
-class AddFile : AppCompatActivity() {
+class EditFile : AppCompatActivity() {
 
-    private lateinit var addNameFile: EditText
-    private lateinit var uploadFileBtn: Button
+    private lateinit var editNameFile: EditText
+    private lateinit var editFileBtn: Button
+    private lateinit var editFileFab: FloatingActionButton
     private lateinit var backPageCourseFile: ImageView
-    private lateinit var pickFileFab: FloatingActionButton
 
     lateinit var auth: FirebaseAuth
     lateinit var database: DatabaseReference
@@ -35,16 +36,18 @@ class AddFile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_file)
+        setContentView(R.layout.activity_edit_file)
 
-        addNameFile = findViewById(R.id.addNameFile)
-        pickFileFab = findViewById(R.id.pickFileFab)
-        uploadFileBtn = findViewById(R.id.uploadFileBtn)
+        editNameFile = findViewById(R.id.editNameFile)
+        editFileFab = findViewById(R.id.editFileFab)
+        editFileBtn = findViewById(R.id.editFileBtn)
         backPageCourseFile = findViewById(R.id.backPageCourseFile)
+
+        editNameFile.setText(intent.getStringExtra("Name_File").toString())
+        pdfUri = intent.getStringExtra("Uri_File")!!.toUri()
 
         auth = Firebase.auth
         database = Firebase.database.reference
-        val idFile = System.currentTimeMillis()
         var idLecturer = ""
 
         database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
@@ -57,29 +60,26 @@ class AddFile : AppCompatActivity() {
         backPageCourseFile.setOnClickListener {
             intent(Intent(this, CoursePageLecturer::class.java))
         }
-        pickFileFab.setOnClickListener {
+        editFileFab.setOnClickListener {
             pdfPickIntent()
         }
 
-        uploadFileBtn.setOnClickListener {
+        editFileBtn.setOnClickListener {
             val idCourse = intent.getStringExtra("id_Course").toString()
             when {
-                addNameFile.text.isEmpty() -> {
+                editNameFile.text.isEmpty() -> {
                     Toast.makeText(this, "File Name is required", Toast.LENGTH_SHORT).show()
-                }
-                pdfUri == null -> {
-                    Toast.makeText(this, "Pick the File First", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
                     var nameFile = "null"
                     database.child("Lecturer/$idLecturer/Courses/$idCourse/File").get()
                         .addOnSuccessListener { dataSnapshot ->
                             for (document in dataSnapshot.children) {
-                                if (document.child("Name_File").value.toString() == addNameFile.text.toString()) {
+                                if (document.child("Name_File").value.toString() == editNameFile.text.toString()) {
                                     nameFile = "nameFile"
                                     Toast.makeText(
                                         this,
-                                        "This ${addNameFile.text} is already in use, try again",
+                                        "This ${editNameFile.text} is already in use, try again",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -89,11 +89,18 @@ class AddFile : AppCompatActivity() {
                         when (nameFile) {
                             "nameFile" -> {}
                             else -> {
+                                val idFile = intent.getStringExtra("id_File").toString()
                                 val builder = AlertDialog.Builder(this)
-                                builder.setTitle("Add File")
-                                builder.setMessage("Do you want to Add the File?")
+                                builder.setTitle("Edit File")
+                                builder.setMessage("Do you want to Edit the File?")
                                 builder.setPositiveButton("Yes") { _, _ ->
-                                    uploadFileFirebase(idLecturer)
+                                    editFile(
+                                        idFile,
+                                        editNameFile.text.toString(),
+                                        idLecturer
+                                    )
+                                    intent(Intent(this, CoursePageLecturer::class.java))
+                                    Toast.makeText(this, "Edit Successfully", Toast.LENGTH_SHORT).show()
                                 }
                                 builder.setNegativeButton("No") { d, _ ->
                                     d.dismiss()
@@ -108,9 +115,9 @@ class AddFile : AppCompatActivity() {
         }
     }
 
-    private fun uploadFileFirebase(idLecturer: String) {
+    private fun uploadFileFirebase() {
         showDialog()
-        val idFile = System.currentTimeMillis()
+        val idFile = intent.getStringExtra("id_File").toString()
         val filePathAndName = "Files/file_$idFile"
         val storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
         storageReference.putFile(pdfUri!!).addOnSuccessListener { taskSnapshot ->
@@ -118,19 +125,11 @@ class AddFile : AppCompatActivity() {
             while (!uriTask.isSuccessful);
             val downloadUri = uriTask.result
             if (uriTask.isSuccessful) {
-                addFile(
-                    idFile.toString(),
-                    addNameFile.text.toString(),
-                    downloadUri.toString(),
-                    intent.getStringExtra("Number_Course").toString(),
-                    idLecturer
-                )
+                hideDialog()
+            } else {
                 hideDialog()
                 intent(Intent(this, CoursePageLecturer::class.java))
-                Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT).show()
-            } else {
-                intent(Intent(this, CoursePageLecturer::class.java))
-                Toast.makeText(this, "Add Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Edit Failed", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener { e ->
             hideDialog()
@@ -139,23 +138,17 @@ class AddFile : AppCompatActivity() {
         }
     }
 
-    private fun addFile(
+    private fun editFile(
         id_File: String,
         Name_File: String,
-        Uri_File: String,
-        Number_Course: String,
         id_Lecturer: String
     ) {
-        val file = hashMapOf(
-            "id_File" to id_File,
-            "Name_File" to Name_File,
-            "Uri_File" to Uri_File,
-            "Number_Course" to Number_Course,
-            "id_Lecturer" to id_Lecturer
+        val file = mapOf(
+            "Name_File" to Name_File
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
-        database.child("Courses/$idCourse/File/$id_File").setValue(file)
-        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/File/$id_File").setValue(file)
+        database.child("Courses/$idCourse/File/$id_File").updateChildren(file)
+        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/File/$id_File").updateChildren(file)
     }
 
     private fun pdfPickIntent() {
@@ -179,7 +172,7 @@ class AddFile : AppCompatActivity() {
     private fun showDialog() {
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Please wait")
-        progressDialog.setMessage("Uploading File...")
+        progressDialog.setMessage("Edit File...")
         progressDialog.setCancelable(false)
         progressDialog.show()
     }

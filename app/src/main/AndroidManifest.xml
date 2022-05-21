@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.myapplication3">
+    package="com.example.myapplication3" >
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
@@ -15,7 +15,19 @@
         android:label="Moodle"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication3">
+        android:theme="@style/Theme.MyApplication3" >
+        <activity
+            android:name=".navBottom.homeScreen.course.edit.EditVideo"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.edit.EditFile"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.edit.EditAssignment"
+            android:exported="false" />
+        <activity
+            android:name=".navBottom.homeScreen.course.CoursePageLecturer"
+            android:exported="false" />
         <activity
             android:name=".navBottom.homeScreen.course.AssignmentPage"
             android:exported="false" />
@@ -45,7 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".logIn.SplashActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

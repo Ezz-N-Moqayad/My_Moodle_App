@@ -1,4 +1,4 @@
-package com.example.myapplication3.navBottom.homeScreen.course.add
+package com.example.myapplication3.navBottom.homeScreen.course.edit
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -17,11 +17,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class AddAssignment : AppCompatActivity() {
+class EditAssignment : AppCompatActivity() {
 
-    private lateinit var addNameAss: EditText
-    private lateinit var addRequiredAss: EditText
-    private lateinit var addAss: Button
+    private lateinit var editNameAss: EditText
+    private lateinit var editRequiredAss: EditText
+    private lateinit var editAss: Button
     private lateinit var backPageCourseAss: ImageView
 
     lateinit var database: DatabaseReference
@@ -29,16 +29,19 @@ class AddAssignment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_assignment)
+        setContentView(R.layout.activity_edit_assignment)
 
-        addNameAss = findViewById(R.id.addNameAss)
-        addRequiredAss = findViewById(R.id.addRequiredAss)
-        addAss = findViewById(R.id.addAss)
+        editNameAss = findViewById(R.id.editNameAss)
+        editRequiredAss = findViewById(R.id.editRequiredAss)
+        editAss = findViewById(R.id.editAss)
         backPageCourseAss = findViewById(R.id.backPageCourseAss)
 
         auth = Firebase.auth
         database = Firebase.database.reference
-        val idAssignment = System.currentTimeMillis()
+
+        editNameAss.setText(intent.getStringExtra("Name_Assignment").toString())
+        editRequiredAss.setText(intent.getStringExtra("Required_Assignment").toString())
+
         var idLecturer = ""
 
         database.child("Lecturer").get().addOnSuccessListener { dataSnapshot ->
@@ -52,19 +55,19 @@ class AddAssignment : AppCompatActivity() {
             intent(Intent(this, CoursePageLecturer::class.java))
         }
 
-        addAss.setOnClickListener {
+        editAss.setOnClickListener {
             val idCourse = intent.getStringExtra("id_Course").toString()
-            if (addNameAss.text.isEmpty() || addRequiredAss.text.isEmpty()) {
+            if (editNameAss.text.isEmpty() || editRequiredAss.text.isEmpty()) {
                 Toast.makeText(this, "File Fields", Toast.LENGTH_SHORT).show()
             } else {
                 var nameAssignment = "null"
                 database.child("Lecturer/$idLecturer/Courses/$idCourse/Assignment").get()
                     .addOnSuccessListener { dataSnapshot ->
                         for (document in dataSnapshot.children) {
-                            if (document.child("Name_Assignment").value.toString() == addNameAss.text.toString()) {
+                            if (document.child("Name_Assignment").value.toString() == editNameAss.text.toString()) {
                                 nameAssignment = "nameAssignment"
                                 Toast.makeText(
-                                    this, "This ${addNameAss.text} is already in use, try again",
+                                    this, "This ${editNameAss.text} is already in use, try again",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -76,17 +79,15 @@ class AddAssignment : AppCompatActivity() {
                         "nameAssignment" -> {}
                         else -> {
                             val builder = AlertDialog.Builder(this)
-                            builder.setTitle("Add Assignment")
-                            builder.setMessage("Do you want to Add the Assignment?")
+                            builder.setTitle("Edit Assignment")
+                            builder.setMessage("Do you want to Edit the Assignment?")
                             builder.setPositiveButton("Yes") { _, _ ->
-                                addAssignment(
-                                    idAssignment.toString(),
-                                    addNameAss.text.toString(),
-                                    addRequiredAss.text.toString(),
-                                    intent.getStringExtra("Number_Course").toString(),
+                                editAssignment(
+                                    editNameAss.text.toString(),
+                                    editRequiredAss.text.toString(),
                                     idLecturer
                                 )
-                                Toast.makeText(this, "Added Successfully", Toast.LENGTH_SHORT)
+                                Toast.makeText(this, "Edit Successfully", Toast.LENGTH_SHORT)
                                     .show()
                                 intent(Intent(this, CoursePageLecturer::class.java))
                             }
@@ -102,24 +103,20 @@ class AddAssignment : AppCompatActivity() {
         }
     }
 
-    private fun addAssignment(
-        id_Assignment: String,
+    private fun editAssignment(
         Name_Assignment: String,
         Required_Assignment: String,
-        Number_Course: String,
         id_Lecturer: String
     ) {
-        val assignment = hashMapOf(
-            "id_Assignment" to id_Assignment,
+        val assignment = mapOf(
             "Name_Assignment" to Name_Assignment,
-            "Required_Assignment" to Required_Assignment,
-            "Number_Course" to Number_Course,
-            "id_Lecturer" to id_Lecturer
+            "Required_Assignment" to Required_Assignment
         )
         val idCourse = intent.getStringExtra("id_Course").toString()
-        database.child("Courses/$idCourse/Assignment/$id_Assignment").setValue(assignment)
-        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/Assignment/$id_Assignment")
-            .setValue(assignment)
+        val idAssignment = intent.getStringExtra("id_Assignment").toString()
+        database.child("Courses/$idCourse/Assignment/$idAssignment").updateChildren(assignment)
+        database.child("Lecturer/$id_Lecturer/Courses/$idCourse/Assignment/$idAssignment")
+            .updateChildren(assignment)
     }
 
     fun intent(Intent_Page: Intent) {

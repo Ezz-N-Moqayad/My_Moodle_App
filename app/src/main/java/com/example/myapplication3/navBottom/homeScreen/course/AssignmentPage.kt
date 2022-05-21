@@ -26,7 +26,6 @@ import com.google.firebase.storage.FirebaseStorage
 class AssignmentPage : AppCompatActivity() {
 
     private lateinit var nameAssignment: TextView
-    private lateinit var numberAssignment: TextView
     private lateinit var requiredAssignment: TextView
     private lateinit var uploadDeliveryAssBtn: Button
     private lateinit var pickDeliveryAssFab: FloatingActionButton
@@ -42,7 +41,6 @@ class AssignmentPage : AppCompatActivity() {
         setContentView(R.layout.activity_assignment_page)
 
         nameAssignment = findViewById(R.id.nameAssignment)
-        numberAssignment = findViewById(R.id.numberAssignment)
         requiredAssignment = findViewById(R.id.requiredAssignment)
         uploadDeliveryAssBtn = findViewById(R.id.uploadDeliveryAssBtn)
         pickDeliveryAssFab = findViewById(R.id.pickDeliveryAssFab)
@@ -52,7 +50,6 @@ class AssignmentPage : AppCompatActivity() {
         database = Firebase.database.reference
 
         nameAssignment.text = intent.getStringExtra("Name_Assignment").toString()
-        numberAssignment.text = intent.getStringExtra("Number_Assignment").toString()
         requiredAssignment.text = intent.getStringExtra("Required_Assignment").toString()
 
         var idLecturer = ""
@@ -125,7 +122,6 @@ class AssignmentPage : AppCompatActivity() {
                     idDelivery.toString(),
                     downloadUri.toString(),
                     intent.getStringExtra("id_Assignment").toString(),
-                    intent.getStringExtra("Number_Assignment").toString(),
                     intent.getStringExtra("Number_Course").toString(),
                     idLecturer
                 )
@@ -147,14 +143,12 @@ class AssignmentPage : AppCompatActivity() {
         id_Delivery: String,
         Uri_Delivery: String,
         id_Assignment: String,
-        Number_Assignment: String,
         Number_Course: String,
         idLecturer: String
     ) {
         val delivery = hashMapOf(
             "id_Delivery" to id_Delivery,
             "Uri_Delivery" to Uri_Delivery,
-            "Number_Assignment" to Number_Assignment,
             "Number_Course" to Number_Course,
             "idLecturer" to idLecturer
         )

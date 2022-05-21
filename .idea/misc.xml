@@ -34,19 +34,25 @@
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/Assignment_course_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_add_assignment.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_add_file.xml" value="0.18" />
-        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_add_video.xml" value="0.1" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_add_video.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_assignment_page.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_course_page.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_edit_assignment.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_edit_course.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_edit_file.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_edit_video.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_log_in.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_sign_up.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/activity_video.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/assignment_course_item.xml" value="0.25" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/assignment_course_item.xml" value="0.33" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/assignment_course_lucturer_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/course_item.xml" value="0.25" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/course_lecturer_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/course_student_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/file_course_item.xml" value="0.25" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/file_course_item.xml" value="0.22" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/file_course_lucturer_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/fragment_about2.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/fragment_add_course.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.20416666666666666" />
@@ -61,11 +67,13 @@
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/fragment_title2.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/fragment_user_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/list_view_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/video_course_item.xml" value="0.11392405063291139" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/video_course_item.xml" value="0.18" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/layout/video_course_lucturer_item.xml" value="0.25" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/menu/bottom_nav.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/menu/toolbar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/menu/toolbar_Coures.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/menu/toolbar_coures.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/My Moodle App/app/src/main/res/menu/toolbar_student.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/activity_add_file.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/activity_add_fill.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sata/AndroidStudioProjects/Cloud/MyApplication3/app/src/main/res/layout/activity_course_page.xml" value="0.25" />

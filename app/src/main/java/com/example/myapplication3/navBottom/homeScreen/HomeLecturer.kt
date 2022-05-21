@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication3.R
 import com.example.myapplication3.modle.Course
 import com.example.myapplication3.navBottom.homeScreen.course.CoursePage
+import com.example.myapplication3.navBottom.homeScreen.course.CoursePageLecturer
 import com.example.myapplication3.navBottom.homeScreen.course.ViewHolder
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -93,14 +94,25 @@ class HomeLecturer : Fragment() {
                 holder.course_lecturer.text = model.Lecturer
                 holder.course_number.text = model.Number_Course
                 holder.course_layout.setOnClickListener {
-                    val i = Intent(context, CoursePage::class.java)
-                    i.putExtra("id_Lecturer", model.id_Lecturer)
-                    i.putExtra("id_Student", idStudent)
-                    i.putExtra("Lecturer", model.Lecturer)
-                    i.putExtra("id_Course", model.id_Course)
-                    i.putExtra("Name_Course", model.Name_Course)
-                    i.putExtra("Number_Course", model.Number_Course)
-                    startActivity(i)
+                    if (idLecturer.isEmpty()){
+                        val i = Intent(context, CoursePage::class.java)
+                        i.putExtra("id_Lecturer", model.id_Lecturer)
+                        i.putExtra("id_Student", idStudent)
+                        i.putExtra("Lecturer", model.Lecturer)
+                        i.putExtra("id_Course", model.id_Course)
+                        i.putExtra("Name_Course", model.Name_Course)
+                        i.putExtra("Number_Course", model.Number_Course)
+                        startActivity(i)
+                    }else{
+                        val i = Intent(context, CoursePageLecturer::class.java)
+                        i.putExtra("id_Lecturer", model.id_Lecturer)
+                        i.putExtra("id_Student", idStudent)
+                        i.putExtra("Lecturer", model.Lecturer)
+                        i.putExtra("id_Course", model.id_Course)
+                        i.putExtra("Name_Course", model.Name_Course)
+                        i.putExtra("Number_Course", model.Number_Course)
+                        startActivity(i)
+                    }
                 }
             }
         }

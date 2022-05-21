@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navBottom.homeScreen.course.AssignmentPage">
+    tools:context=".navBottom.homeScreen.course.edit.EditVideo">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/Assignment_toolbar"
+        android:id="@+id/Video_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -18,64 +18,67 @@
         app:titleTextColor="@android:color/white">
 
         <ImageView
-            android:id="@+id/backPageCourseAss"
+            android:id="@+id/backPageCourseVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             app:srcCompat="@drawable/ic_arrow_back" />
 
         <TextView
-            android:id="@+id/textView4Ass"
+            android:id="@+id/textView4Video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assignment"
+            android:text="Edit Video"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
-        android:id="@+id/nameAssignment"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25sp"
-        android:layout_marginTop="10dp"
-        android:text="Name Assignment"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintHorizontal_bias="0.172"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:text="Edit Video"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editNameVideo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Assignment_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/Video_toolbar" />
 
-    <TextView
-        android:id="@+id/requiredAssignment"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25sp"
-        android:layout_marginTop="35dp"
-        android:gravity="center_vertical"
-        android:lines="10"
-        android:minHeight="48dp"
-        android:text="Required Assignment"
+    <EditText
+        android:id="@+id/editNameVideo"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/back"
+        android:hint="Video Name"
+        android:inputType="text"
+        android:paddingStart="10dp"
         android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameAssignment" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/editVideoBtn"
+        app:layout_constraintEnd_toStartOf="@+id/editVideoFab"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/uploadDeliveryAssBtn"
+        android:id="@+id/editVideoBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="ADD Delivery"
+        android:text="Edit Video"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requiredAssignment" />
+        app:layout_constraintTop_toBottomOf="@+id/editNameVideo" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pickDeliveryAssFab"
+        android:id="@+id/editVideoFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -83,6 +86,6 @@
         android:layout_marginBottom="50dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toTopOf="@+id/uploadDeliveryAssBtn"
+        app:layout_constraintBottom_toTopOf="@+id/editVideoBtn"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
